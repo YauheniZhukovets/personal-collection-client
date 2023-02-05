@@ -14,9 +14,4 @@ export class AuthService {
     static async logout(): Promise<void> {
         return api.post('/logout',)
     }
-
-    static async checkMe(): Promise<AxiosResponse<AuthResponse>> {
-        console.log(' auth service checkMe ')
-        return api.get<AuthResponse>('/refresh')
-    }
 }

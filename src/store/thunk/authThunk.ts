@@ -45,12 +45,9 @@ export const logout = (): AppThunk => async (dispatch) => {
 }
 
 export const checkAuth = (): AppThunk => async (dispatch) => {
-    console.log('thank check')
     dispatch(setLoading(true))
     try {
-        console.log('try thunk')
-        const res = await AuthService.checkMe()
-        console.log(res)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/refresh`, {withCredentials: true})
         localStorage.setItem('token', res.data.accessToken)
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
