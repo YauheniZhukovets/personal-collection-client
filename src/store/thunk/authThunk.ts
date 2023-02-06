@@ -3,6 +3,7 @@ import {AuthService} from '../../service/AuthService';
 import {setAuth, setLoading, setUser} from '../action/authAction';
 import axios from 'axios';
 import {User} from '../../models/User';
+import {AuthResponse} from '../../models/AuthResponse';
 
 
 export const login = (email: string, password: string): AppThunk => async (dispatch) => {
@@ -47,7 +48,7 @@ export const logout = (): AppThunk => async (dispatch) => {
 export const checkAuth = (): AppThunk => async (dispatch) => {
     dispatch(setLoading(true))
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/refresh`, {withCredentials: true})
+        const res = await axios.get<AuthResponse>(`${process.env.REACT_APP_API_URL}/refresh`, {withCredentials: true})
         localStorage.setItem('token', res.data.accessToken)
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
