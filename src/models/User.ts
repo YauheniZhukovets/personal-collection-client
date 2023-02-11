@@ -1,5 +1,11 @@
 export interface User {
     _id: string
+    name: string
     email: string
-    isActivated: boolean
+    collectionsCount: number
+    isAdmin: boolean
+    isBlocked: boolean
+    created: Date
+    updated: Date
+
 }

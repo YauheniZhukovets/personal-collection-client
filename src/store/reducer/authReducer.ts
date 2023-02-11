@@ -4,7 +4,7 @@ import {ActionAuthType} from '../type/authType';
 const initialState = {
     user: {} as User,
     isAuth: false,
-    isLoading: false
+    isInitialize: false
 }
 
 type InitialStateType = typeof initialState
@@ -17,8 +17,8 @@ export const authReducer = (state = initialState, action: ActionAuthType): Initi
         case 'AUTH/SET-USER': {
             return {...state, user: action.user}
         }
-        case 'AUTH/SET-LOADING': {
-            return {...state, isLoading: action.isLoading}
+        case 'AUTH/SET-INITIALIZE': {
+            return {...state, isInitialize: true}
         }
         default:
             return state

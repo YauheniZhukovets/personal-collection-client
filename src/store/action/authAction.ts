@@ -6,6 +6,6 @@ export const setAuth = (isAuth: boolean) => {
 export const setUser = (user: User) => {
     return {type: 'AUTH/SET-USER', user} as const
 }
-export const setLoading = (isLoading: boolean) => {
-    return {type: 'AUTH/SET-LOADING', isLoading} as const
+export const setInitialize = () => {
+    return {type: 'AUTH/SET-INITIALIZE'} as const
 }
