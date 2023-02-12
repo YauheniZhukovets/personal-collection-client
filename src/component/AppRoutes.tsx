@@ -22,7 +22,9 @@ export const AppRoutes = () => {
             {
                 user.isAdmin && <Route path={'/admin'} element={<AdminPanel/>}/>
             }
-            <Route path={'/collection'} element={<MyPage/>}/>
+            <Route path={'/collection'} element={<MyPage/>}>
+                <Route path={'/collection/' + ':id'} element={<MyPage/>}/>
+            </Route>
             <Route path={'/'} element={<Home/>}/>
             <Route path={'*'} element={<Navigate to={'/'} replace/>}/>
         </Routes>

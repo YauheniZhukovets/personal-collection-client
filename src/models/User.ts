@@ -9,3 +9,7 @@ export interface User {
     updated: Date
 
 }
+
+export interface DomainUser extends User {
+    key: number
+}

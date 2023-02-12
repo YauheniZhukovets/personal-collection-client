@@ -5,15 +5,14 @@ import {checkAuth, logout} from './store/thunk/authThunk';
 import {AppRoutes} from './component/AppRoutes';
 import {ModalLogin} from './app/Login/ModalLogin';
 import {ModalRegistration} from './app/Registration/ModalRegistration';
-import {Button, ConfigProvider, Layout, Switch, theme, Typography} from 'antd';
+import {Button, ConfigProvider, Layout, Switch, theme} from 'antd';
 import {StatusType} from './type/Common';
 import {useTranslation} from 'react-i18next';
 import {MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
 import {Backdrop, CircularProgress} from '@mui/material';
-import {Sidebar} from './app/Sidebar/Sidebar';
+import {Sidebar} from './app/Sidebar';
 
-const {Header, Content, Footer} = Layout;
-const {Text} = Typography;
+const {Header, Content, Footer} = Layout
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -96,8 +95,8 @@ export const App = () => {
                                 onClick: () => setCollapsed(!collapsed),
                             })}
                         </div>
-                        <div style={{display: 'flex'}}>
-                            <div style={{marginRight: 5}}>
+                        <div style={{display: 'flex', gap: 5}}>
+                            <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
                                 <Switch
                                     checked={!isDarkMode}
                                     onChange={changeTheme}
@@ -114,10 +113,8 @@ export const App = () => {
                             {
                                 email ?
                                     <div style={{display: 'flex'}}>
-                                        <div>
-                                            <Text style={{paddingRight: 5}}
-                                                  type="warning">{email}
-                                            </Text>
+                                        <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
+                                            <div style={{color: 'lightgrey'}}>{email}</div>
                                             <Button onClick={onClickLogout}
                                                     disabled={status === 'loading'}
                                             >

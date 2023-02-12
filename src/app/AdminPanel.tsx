@@ -1,76 +1,82 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Table} from 'antd';
+import {Button, Space, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
-import {fetchUsers} from '../store/thunk/userThunk';
+import {banedUser, fetchUsers, removeUser, unBanedUser} from '../store/thunk/userThunk';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {User} from '../models/User';
-
-/*export interface User {
-    _id: string
-    name: string
-    email: string
-    collectionsCount: number
-    isAdmin: boolean
-    isBlocked: boolean
-    createdAt: Date
-    updatedAt: Date
-
-}*/
-/*interface DataType {
-    key: React.Key;
-    name: string;
-    email: string;
-    isAdmin: boolean
-    isBlocked: boolean
-    collectionsCount: number
-}*/
-
-const columns: ColumnsType<User> = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-    },
-    {
-        title: 'Admin',
-        dataIndex: 'isAdmin',
-    },
-    {
-        title: 'Blocked',
-        dataIndex: 'isBlocked',
-    },
-    {
-        title: 'Collections',
-        dataIndex: 'collectionsCount',
-    },
-]
+import {DomainUser, User} from '../models/User';
+import {NavLink} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 export const AdminPanel: React.FC = () => {
+    const {t} = useTranslation()
+    const columns: ColumnsType<User> = [
+        {
+            title: `${t('admin.email')}`,
+            dataIndex: 'email',
+            render: (_, u) => (
+                <Space size="middle">
+                    <NavLink to={`/collection/${u._id}`}>{u.email}</NavLink>
+                </Space>
+            ),
+        },
+        {
+            title: `${t('admin.name')}`,
+            dataIndex: 'name',
+        },
+        {
+            title: `${t('admin.admin')}`,
+            dataIndex: 'isAdmin',
+        },
+        {
+            title: `${t('admin.block')}`,
+            dataIndex: 'isBlocked',
+        },
+        {
+            title: `${t('admin.collections')}`,
+            dataIndex: 'collectionsCount',
+        },
+    ]
     const dispatch = useAppDispatch()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
-    const users = useAppSelector<User[]>(state => state.user.users)
+    const status = useAppSelector<string>(state => state.app.status)
+    const u = useAppSelector<any>(state => state.user.users)
+
+
+    const users = u.map((el: DomainUser, i: number) => {
+        let admin = el.isAdmin
+        let baned = el.isBlocked
+        return (
+            {...el, key: i, isAdmin: String(admin), isBlocked: String(baned)}
+        )
+    })
+
+    const getUserId = (users: DomainUser[], key: React.Key[]) => {
+        return users.filter((u) => key.includes(u.key)).map(el => el._id)
+    }
 
     useEffect(() => {
         dispatch(fetchUsers())
     }, [])
 
 
-    const start = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setSelectedRowKeys([]);
-            setLoading(false);
-        }, 1000);
-    };
+    const onClickBlock = () => {
+        const ids = getUserId(users, selectedRowKeys)
+        dispatch(banedUser(ids))
+    }
+
+    const onClickUnBlock = () => {
+        const ids = getUserId(users, selectedRowKeys)
+        dispatch(unBanedUser(ids))
+    }
+
+    const onClickDelete = () => {
+        const ids = getUserId(users, selectedRowKeys)
+        dispatch(removeUser(ids))
+    }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
-    };
+    }
 
     const rowSelection = {
         selectedRowKeys,
@@ -81,15 +87,19 @@ export const AdminPanel: React.FC = () => {
 
     return (
         <div>
-            <div style={{marginBottom: 16}}>
-                <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-                    Reload
+            <div style={{marginBottom: 16, display: 'flex', gap: 5}}>
+                <Button onClick={onClickBlock} disabled={status === 'loading'}>
+                    {t('admin.onBlock')}
                 </Button>
-                <span style={{marginLeft: 8}}>
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
+                <Button onClick={onClickUnBlock} disabled={status === 'loading'}>
+                    {t('admin.onUnBlock')}
+                </Button>
+                <Button type="primary" onClick={onClickDelete} disabled={status === 'loading'}>
+                    {t('admin.onDelete')}
+                </Button>
+                <span style={{marginLeft: 8}}>{hasSelected ? `Selected ${selectedRowKeys.length} user` : ''}</span>
             </div>
             <Table rowSelection={rowSelection} columns={columns} dataSource={users}/>
         </div>
-    );
+    )
 }

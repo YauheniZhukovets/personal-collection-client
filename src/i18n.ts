@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
@@ -33,9 +33,20 @@ i18n
                         email: 'Email',
                         password: 'Password',
                     },
+                    sidebar: {
+                        home: 'Home',
+                        collection: 'Collections',
+                        admin: 'Admin Panel',
+                    },
                     admin: {
-                        username: 'Username',
-                        email: 'Email'
+                        name: 'Name',
+                        email: 'Email',
+                        admin: 'Admin',
+                        block: 'Blocked',
+                        collections: 'Collections',
+                        onBlock: 'Block',
+                        onUnBlock: 'Unblock',
+                        onDelete: 'Delete'
                     },
                 }
             },
@@ -60,10 +71,20 @@ i18n
                         email: 'Почта',
                         password: 'Пароль',
                     },
+                    sidebar: {
+                        home: 'Главная',
+                        collection: 'Коллекции',
+                        admin: 'Панель админа',
+                    },
                     admin: {
-                        username: 'Имя пользователя',
-                        email: 'Почта',
-
+                        name: 'Имя',
+                        email: 'Email',
+                        admin: 'Админ',
+                        block: 'Блокирован',
+                        collections: 'К-во колекций',
+                        onBlock: 'Блокировать',
+                        onUnBlock: 'Разблокировать',
+                        onDelete: 'Удалить'
                     },
                 }
             },
