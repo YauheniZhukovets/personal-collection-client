@@ -15,6 +15,14 @@ export class UserService {
         return api.post<User[]>('/user/unblock', {ids})
     }
 
+    static async removeAdminUser(ids: string[]): Promise<AxiosResponse<User[]>> {
+        return api.post<User[]>('/user/remove-admin', {ids})
+    }
+
+    static async makeAdminUser(ids: string[]): Promise<AxiosResponse<User[]>> {
+        return api.post<User[]>('/user/add-admin', {ids})
+    }
+
     static async deleteUser(ids: string[]): Promise<AxiosResponse<User[]>> {
         return api.post<User[]>('/user/delete', {ids})
     }

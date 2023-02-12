@@ -3,14 +3,14 @@ import './index.css';
 import {useAppDispatch, useAppSelector} from './hooks/hooks';
 import {checkAuth, logout} from './store/thunk/authThunk';
 import {AppRoutes} from './component/AppRoutes';
-import {ModalLogin} from './app/Login/ModalLogin';
-import {ModalRegistration} from './app/Registration/ModalRegistration';
+import {ModalLogin} from './app/ModalLogin';
+import {ModalRegistration} from './app/ModalRegistration';
 import {Button, ConfigProvider, Layout, Switch, theme} from 'antd';
 import {StatusType} from './type/Common';
 import {useTranslation} from 'react-i18next';
 import {MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
 import {Backdrop, CircularProgress} from '@mui/material';
-import {Sidebar} from './app/Sidebar';
+import {Sidebar} from './component/Sidebar';
 
 const {Header, Content, Footer} = Layout
 

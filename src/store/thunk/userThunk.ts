@@ -68,3 +68,31 @@ export const removeUser = (ids: string[]): AppThunk => async (dispatch, getState
         dispatch(setStatus('failed'))
     }
 }
+
+export const removeAdminUser = (ids: string[]): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setStatus('loading'))
+        const res = await UserService.removeAdminUser(ids)
+        dispatch(setUsers(res.data))
+        dispatch(setStatus('succeeded'))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response?.data?.message)
+        }
+        dispatch(setStatus('failed'))
+    }
+}
+
+export const makeAdminUser = (ids: string[]): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setStatus('loading'))
+        const res = await UserService.makeAdminUser(ids)
+        dispatch(setUsers(res.data))
+        dispatch(setStatus('succeeded'))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response?.data?.message)
+        }
+        dispatch(setStatus('failed'))
+    }
+}

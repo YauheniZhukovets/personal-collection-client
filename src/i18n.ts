@@ -46,7 +46,9 @@ i18n
                         collections: 'Collections',
                         onBlock: 'Block',
                         onUnBlock: 'Unblock',
-                        onDelete: 'Delete'
+                        onDelete: 'Delete',
+                        onMakeAdmin: 'Add Admin',
+                        onRemoveAdmin: 'Remove Admin',
                     },
                 }
             },
@@ -84,7 +86,9 @@ i18n
                         collections: 'К-во колекций',
                         onBlock: 'Блокировать',
                         onUnBlock: 'Разблокировать',
-                        onDelete: 'Удалить'
+                        onDelete: 'Удалить',
+                        onMakeAdmin: 'Сделать админом',
+                        onRemoveAdmin: 'Сделать юзером',
                     },
                 }
             },

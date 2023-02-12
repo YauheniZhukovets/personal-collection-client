@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Space, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
-import {banedUser, fetchUsers, removeUser, unBanedUser} from '../store/thunk/userThunk';
+import {banedUser, fetchUsers, makeAdminUser, removeAdminUser, removeUser, unBanedUser} from '../store/thunk/userThunk';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {DomainUser, User} from '../models/User';
 import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
+import {DeleteOutlined, LockOutlined, UnlockOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
+
 
 export const AdminPanel: React.FC = () => {
     const {t} = useTranslation()
@@ -69,6 +71,16 @@ export const AdminPanel: React.FC = () => {
         dispatch(unBanedUser(ids))
     }
 
+    const onClickMakeAdmin = () => {
+        const ids = getUserId(users, selectedRowKeys)
+        dispatch(makeAdminUser(ids))
+    }
+
+    const onClickRemoveAdmin = () => {
+        const ids = getUserId(users, selectedRowKeys)
+        dispatch(removeAdminUser(ids))
+    }
+
     const onClickDelete = () => {
         const ids = getUserId(users, selectedRowKeys)
         dispatch(removeUser(ids))
@@ -83,21 +95,24 @@ export const AdminPanel: React.FC = () => {
         onChange: onSelectChange,
     }
 
-    const hasSelected = selectedRowKeys.length > 0;
-
     return (
         <div>
             <div style={{marginBottom: 16, display: 'flex', gap: 5}}>
                 <Button onClick={onClickBlock} disabled={status === 'loading'}>
-                    {t('admin.onBlock')}
+                    <LockOutlined />
                 </Button>
                 <Button onClick={onClickUnBlock} disabled={status === 'loading'}>
-                    {t('admin.onUnBlock')}
+                    <UnlockOutlined />
+                </Button>
+                <Button onClick={onClickMakeAdmin} disabled={status === 'loading'}>
+                    <UserAddOutlined />
+                </Button>
+                <Button onClick={onClickRemoveAdmin} disabled={status === 'loading'}>
+                    <UserDeleteOutlined />
                 </Button>
                 <Button type="primary" onClick={onClickDelete} disabled={status === 'loading'}>
-                    {t('admin.onDelete')}
+                    <DeleteOutlined/>
                 </Button>
-                <span style={{marginLeft: 8}}>{hasSelected ? `Selected ${selectedRowKeys.length} user` : ''}</span>
             </div>
             <Table rowSelection={rowSelection} columns={columns} dataSource={users}/>
         </div>

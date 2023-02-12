@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Form, Input, Modal} from 'antd';
-import {AuthValueType, StatusType} from '../../type/Common';
-import {registration} from '../../store/thunk/authThunk';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {AuthValueType, StatusType} from '../type/Common';
+import {registration} from '../store/thunk/authThunk';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {useTranslation} from 'react-i18next';
 
 export const ModalRegistration: React.FC = () => {
