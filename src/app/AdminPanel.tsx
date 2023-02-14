@@ -7,6 +7,7 @@ import {DomainUser, User} from '../models/User';
 import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {DeleteOutlined, LockOutlined, UnlockOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
+import {routes} from '../shared/routes';
 
 
 export const AdminPanel: React.FC = () => {
@@ -17,7 +18,7 @@ export const AdminPanel: React.FC = () => {
             dataIndex: 'email',
             render: (_, u) => (
                 <Space size="middle">
-                    <NavLink to={`/collections/${u._id}`}>{u.email}</NavLink>
+                    <NavLink to={`${routes.COLLECTIONS}/${u._id}`}>{u.email}</NavLink>
                 </Space>
             ),
         },

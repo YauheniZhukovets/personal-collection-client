@@ -11,8 +11,8 @@ export class CollectionService {
         return api.post<Collection[]>(`/collection?userId=${id}`, date)
     }
 
-    static async updateCollection(): Promise<AxiosResponse<Collection[]>> {
-        return api.put<Collection[]>('/collection', {})
+    static async updateCollection(date: RequestCollectionType, uId: string): Promise<AxiosResponse<Collection[]>> {
+        return api.put<Collection[]>(`/collection?userId=${uId}`, date)
     }
 
     static async deleteCollection(userId: string, id: string): Promise<AxiosResponse<Collection[]>> {

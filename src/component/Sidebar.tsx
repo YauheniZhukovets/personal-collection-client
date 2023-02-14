@@ -6,6 +6,7 @@ import {User} from '../models/User';
 import {HomeOutlined, ProfileOutlined, UserOutlined, VideoCameraOutlined} from '@ant-design/icons';
 import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
+import {routes} from '../shared/routes';
 
 type SidebarPropsType = {
     collapsed: boolean
@@ -20,40 +21,41 @@ export const Sidebar: FC<SidebarPropsType> = ({collapsed}) => {
         {
             key: '1',
             icon: <HomeOutlined/>,
-            label: (<NavLink to={'/'}>{t('sidebar.home')}</NavLink>),
+            label: (<NavLink to={routes.HOME}>{t('sidebar.home')}</NavLink>),
         },
         {
             key: '2',
             icon: <ProfileOutlined/>,
-            label: (<NavLink to={`/collections/${user._id}`}>{t('sidebar.collection')}</NavLink>),
+            label: (<NavLink to={`${routes.COLLECTIONS}/${user._id}`}>{t('sidebar.collection')}</NavLink>),
         },
         {
             key: '3',
             icon: <UserOutlined/>,
-            label: (<NavLink to={'/admin'}>{t('sidebar.admin')}</NavLink>),
+            label: (<NavLink to={routes.ADMIN}>{t('sidebar.admin')}</NavLink>),
         },
     ]
     const authorized = [
         {
             key: '1',
             icon: <UserOutlined/>,
-            label: (<NavLink to={'/'}>{t('sidebar.home')}</NavLink>),
+            label: (<NavLink to={routes.HOME}>{t('sidebar.home')}</NavLink>),
         },
         {
             key: '2',
             icon: <VideoCameraOutlined/>,
-            label: (<NavLink to={`/collections/${user._id}`}>{t('sidebar.collection')}</NavLink>),
+            label: (<NavLink to={`${routes.COLLECTIONS}/${user._id}`}>{t('sidebar.collection')}</NavLink>),
         },
     ]
     const guest = [
         {
             key: '1',
             icon: <UserOutlined/>,
-            label: (<NavLink to={'/'}>{t('sidebar.home')}</NavLink>),
+            label: (<NavLink to={routes.HOME}>{t('sidebar.home')}</NavLink>),
         }
     ]
 
     const links = user.isAdmin ? admin : isAuth ? authorized : guest
+
     return (
         <Sider trigger={null} collapsible collapsed={collapsed}>
             <Menu

@@ -34,6 +34,21 @@ export const createCollection = (date: RequestCollectionType, id: string): AppTh
     }
 }
 
+export const updateCollection = (date: RequestCollectionType, uId: string): AppThunk => async (dispatch, getState) => {
+    const imgUrl = getState().collection.imageUrl
+    try {
+        dispatch(setStatus('loading'))
+        const res = await CollectionService.updateCollection({...date, image: imgUrl}, uId)
+        dispatch(setCollections(res.data))
+        dispatch(setStatus('succeeded'))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response?.data?.message)
+        }
+        dispatch(setStatus('failed'))
+    }
+}
+
 export const deleteCollection = (userId: string, id:string ): AppThunk => async (dispatch) => {
     try {
         dispatch(setStatus('loading'))

@@ -1,4 +1,5 @@
 import {User} from './User';
+import {NullAnd} from '../type/NullAnd';
 
 export interface Collection {
     _id: string
@@ -7,14 +8,15 @@ export interface Collection {
     theme: string
     description: string
     itemsCount: number
-    image?: string
+    image?: NullAnd<string>
     created: Date
     updated: Date
 }
 
 export type RequestCollectionType = {
+    _id?: string
     name: string
     theme: string
     description: string
-    image: string
+    image: NullAnd<string>
 }

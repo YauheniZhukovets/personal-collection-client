@@ -5,8 +5,8 @@ export const routes = {
     TAGS: '/tags',
     COMMENT: '/comment',
     LIKE: '/like',
-    COLLECTION: '/collection',
+    COLLECTIONS: '/collections',
     ITEM: '/item',
-    ADMIN: 'admin'
+    ADMIN: '/admin'
 }
 

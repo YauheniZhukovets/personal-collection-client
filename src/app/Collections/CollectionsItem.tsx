@@ -3,12 +3,13 @@ import {useAppDispatch} from '../../hooks/hooks';
 import {NavLink, useParams} from 'react-router-dom';
 import {Collection} from '../../models/Collection';
 import {Button, Image, List} from 'antd';
-import {DeleteTwoTone, EditTwoTone, FileOutlined, UserOutlined} from '@ant-design/icons';
+import {DeleteTwoTone, FileOutlined, UserOutlined} from '@ant-design/icons';
 import {IconText} from '../../component/UI/IconText';
 import s from './Collections.module.css'
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 import {deleteCollection} from '../../store/thunk/collectionThunk';
 import {ErrorImage} from '../../component/UI/ErrorImage';
+import {ModalUpdateCollection} from './Modal/ModalUpdateCollection';
 
 
 type CollectionsItemProps = {
@@ -31,15 +32,15 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                     <IconText icon={UserOutlined} text={`${item.user.name}`} key="list-vertical-user"/>,
                     <IconText icon={FileOutlined} text={`${item.itemsCount}`}
                               key="list-vertical-count-item"/>,
-                    <Button>
-                        <EditTwoTone/>
-                    </Button>,
+
+                    <ModalUpdateCollection oldDateItem={item}/>
+                    ,
                     <Button onClick={() => onClickRemoveCollection(item._id)}>
                         <DeleteTwoTone/>
                     </Button>,
                 ]}
                 extra={
-                    item.image !== ''
+                    item.image !== null
                         ?
                         <div className={s.imgWrap}>
                             <Image width={250}

@@ -35,7 +35,7 @@ i18n
                     },
                     sidebar: {
                         home: 'Home',
-                        collection: 'Collections',
+                        collection: 'My Collections',
                         admin: 'Admin Panel',
                     },
                     admin: {
@@ -58,7 +58,9 @@ i18n
                         choiceTheme: 'Please select your theme!',
                         image: 'Image',
                         description: 'Description',
-                        submit: 'Create'
+                        submit: 'Create',
+                        update: 'Update',
+                        titleUpdate: 'Update collection'
                     },
                     themes: {
                         stamp: 'Stamp',
@@ -97,7 +99,7 @@ i18n
                     },
                     sidebar: {
                         home: 'Главная',
-                        collection: 'Коллекции',
+                        collection: 'Моя коллекция',
                         admin: 'Панель админа',
                     },
                     admin: {
@@ -120,7 +122,9 @@ i18n
                         choiceTheme: 'Пожалуйста, выберите тему коллекции!',
                         image: 'Обложка',
                         description: 'Описание',
-                        submit: 'Создать'
+                        submit: 'Создать',
+                        update: 'Обновить',
+                        titleUpdate: 'Изменить каллекцию'
                     },
                     themes: {
                         stamp: 'Марки',

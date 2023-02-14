@@ -6,10 +6,10 @@ export class UploadService {
     static async uploadImage(file: RcFile) {
         const data = new FormData();
         data.append('file', file)
-        data.append('upload_preset', 'personal-collection')
-        data.append('cloud_name', 'dqndufvke')
+        data.append('upload_preset', `${process.env.REACT_APP_UPLOAD_PRESET}`)
+        data.append('cloud_name', `${process.env.REACT_APP_CLOUD_NAME}`)
 
-        return axios.post('https://api.cloudinary.com/v1_1/dqndufvke/image/upload', data , {
+        return axios.post(`${process.env.REACT_APP_UPLOAD_URL}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

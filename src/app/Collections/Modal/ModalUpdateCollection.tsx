@@ -1,52 +1,65 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button, Form, Input, message, Modal, Select, UploadProps} from 'antd';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {StatusType} from '../../type/Common';
-import {uploadImage} from '../../store/thunk/uploadThunk';
-import {InboxOutlined} from '@ant-design/icons';
+import {useAppDispatch, useAppSelector, useTranslateOptions} from '../../../hooks/hooks';
+import {StatusType} from '../../../type/Common';
+import {uploadImage} from '../../../store/thunk/uploadThunk';
+import {DeleteTwoTone, EditTwoTone, InboxOutlined} from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
 import {RcFile} from 'antd/es/upload';
-import {setImageUrl} from '../../store/action/collectionAction';
+import {setImageUrl} from '../../../store/action/collectionAction';
 import SimpleMdeReact from 'react-simplemde-editor';
-import {CustomMarkdownOptions} from '../../component/CustomMarkdownOptions';
+import {CustomMarkdownOptions} from '../../../component/CustomMarkdownOptions';
 import {useTranslation} from 'react-i18next';
-import {createCollection} from '../../store/thunk/collectionThunk';
-import {RequestCollectionType} from '../../models/Collection';
+import {updateCollection} from '../../../store/thunk/collectionThunk';
+import {Collection, RequestCollectionType} from '../../../models/Collection';
 import {useParams} from 'react-router-dom';
+import {themes} from '../../../shared/themeOptions';
+import {NullAnd} from '../../../type/NullAnd';
 
 const {Option} = Select
 
-export const ModalCreateCollection: React.FC = () => {
+type ModalUpdateCollectionType = {
+    oldDateItem: Collection
+}
+
+export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldDateItem}) => {
     const {t} = useTranslation()
-    const {id} = useParams<{ id: string }>()
+    const theme = useTranslateOptions(themes, 'themes')
     const dispatch = useAppDispatch()
     const status = useAppSelector<StatusType>(state => state.app.status)
-    const [open, setOpen] = useState(false)
+    const image = useAppSelector<NullAnd<string>>(state => state.collection.imageUrl)
+    const {id} = useParams<{ id: string }>()
     const [fileList, setFileList] = useState<RcFile[]>([])
-    const [collectionText, setCollectionText] = useState('')
+    const [open, setOpen] = useState(false)
     const [form] = Form.useForm()
-    const themes = [
-        {value: `${t('themes.stamp')}`},
-        {value: `${t('themes.money')}`},
-        {value: `${t('themes.drink')}`},
-        {value: `${t('themes.weapon')}`},
-        {value: `${t('themes.car')}`},
-        {value: `${t('themes.move')}`},
-        {value: `${t('themes.pictures')}`},
-        {value: `${t('themes.books')}`},
-        {value: `${t('themes.crockery')}`},
-        {value: `${t('themes.technics')}`},
-    ]
+    const [collectionText, setCollectionText] = useState<string>('')
+
+    useEffect(() => {
+        if (oldDateItem) {
+            return
+        }
+    }, [oldDateItem])
+
 
     const handleUpload = async (file: RcFile) => {
         await dispatch(uploadImage(file))
         message.success(`${file.name} success upload`)
     }
 
+    const handleCancel = () => {
+        form.resetFields()
+        setOpen(false)
+    }
+
+    const handleOpen = () => {
+        setOpen(true)
+        dispatch(setImageUrl(oldDateItem.image!))
+    }
+
     const propsForUploadImage: UploadProps = {
         onRemove: () => {
             setFileList([])
-            dispatch(setImageUrl(''))
+            dispatch(setImageUrl(null))
         },
         beforeUpload: (file) => {
             const isPic = file.type === 'image/png' || file.type === 'image/jpeg'
@@ -61,20 +74,12 @@ export const ModalCreateCollection: React.FC = () => {
         fileList
     }
 
-    const handleCancel = () => {
-        setOpen(false)
-    }
-
-    const handleOpen = () => {
-        setOpen(true)
-    }
-
     const onSubmitForm = async (values: RequestCollectionType) => {
-        await dispatch(createCollection(values, id!))
+        await dispatch(updateCollection({...values, _id: oldDateItem._id}, id!))
         if (status === 'succeeded') {
             handleCancel()
             form.resetFields()
-            dispatch(setImageUrl(''))
+            dispatch(setImageUrl(null))
             setFileList([])
         }
     }
@@ -83,16 +88,18 @@ export const ModalCreateCollection: React.FC = () => {
         setCollectionText(text)
     }, [])
 
+    const onDeleteOldImage = () => {
+        dispatch(setImageUrl(null))
+    }
     return (
         <div style={{marginRight: 5}}>
-            <Button onClick={handleOpen}
-                    type="primary"
-            >
-                {t('collections.create')}
+            <Button onClick={handleOpen}>
+                <EditTwoTone/>
             </Button>
+
             <Modal
                 open={open}
-                title={t('collections.title')}
+                title={`${t('collections.titleUpdate')}`}
                 onCancel={handleCancel}
                 footer={[]}
                 width={630}
@@ -103,12 +110,19 @@ export const ModalCreateCollection: React.FC = () => {
                       onFinish={onSubmitForm}
                       labelCol={{span: 4}}
                       wrapperCol={{span: 18}}
+                      initialValues={
+                          {
+                              name: oldDateItem.name,
+                              theme: oldDateItem.theme,
+                              description: oldDateItem.description
+                          }
+                      }
                 >
 
                     <Form.Item
                         label={t('collections.name')}
                         name="name"
-                        rules={[{required: true, min: 3, message: 'Please input name collection!'}]}
+                        rules={[{min: 3, message: 'Please input name collection!'}]}
                     >
                         <Input placeholder={`${t('collections.name')}...`}/>
                     </Form.Item>
@@ -117,10 +131,10 @@ export const ModalCreateCollection: React.FC = () => {
                         label={t('collections.theme')}
                         name="theme"
                         hasFeedback
-                        rules={[{required: true, message: 'Please select your theme!'}]}
+                        rules={[{message: 'Please select your theme!'}]}
                     >
                         <Select placeholder={t('collections.choiceTheme')}>
-                            {themes.map((el, i) => (
+                            {theme.map((el, i) => (
                                 <Option key={i} value={el.value}>{el.value}</Option>
                             ))}
                         </Select>
@@ -133,11 +147,28 @@ export const ModalCreateCollection: React.FC = () => {
                             </p>
                             <p className="ant-upload-text">Click or drag image to this area to upload</p>
                         </Dragger>
+                        {
+                            image && oldDateItem.image
+                                ?
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: 5
+                                }}>
+                                    <div>{`${oldDateItem && oldDateItem.image?.slice(0, 55)}...`}</div>
+                                    <Button onClick={onDeleteOldImage}>
+                                        <DeleteTwoTone/>
+                                    </Button>
+                                </div>
+
+                                : <></>
+                        }
                     </Form.Item>
 
                     <Form.Item label={t('collections.description')}
                                name="description"
-                               rules={[{required: true, min: 3, message: 'Please input description collection!'}]}
+                               rules={[{min: 3, message: 'Please input description collection!'}]}
                     >
                         <SimpleMdeReact id="description"
                                         placeholder={`${t('collections.description')}...`}
@@ -153,7 +184,7 @@ export const ModalCreateCollection: React.FC = () => {
                                 className="login-form-button"
                                 disabled={status === 'loading'}
                         >
-                            {t('collections.submit')}
+                            {t('collections.update')}
                         </Button>
                     </Form.Item>
                 </Form>

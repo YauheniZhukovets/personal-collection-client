@@ -4,7 +4,7 @@ import {fetchCollections} from '../../store/thunk/collectionThunk';
 import {useParams} from 'react-router-dom';
 import {Collection} from '../../models/Collection';
 import {List} from 'antd';
-import {ModalCreateCollection} from './ModalCreateCollection';
+import {ModalCreateCollection} from './Modal/ModalCreateCollection';
 import {CollectionsItem} from './CollectionsItem';
 
 export const CollectionsList: FC = () => {
@@ -16,7 +16,7 @@ export const CollectionsList: FC = () => {
         if (id) {
             dispatch(fetchCollections(id))
         }
-    }, [])
+    }, [id])
 
     return (
         <>
