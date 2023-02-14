@@ -50,6 +50,28 @@ i18n
                         onMakeAdmin: 'Add Admin',
                         onRemoveAdmin: 'Remove Admin',
                     },
+                    collections: {
+                        create: 'Create Collection',
+                        title: 'Create new collection',
+                        name: 'Name',
+                        theme: 'Theme',
+                        choiceTheme: 'Please select your theme!',
+                        image: 'Image',
+                        description: 'Description',
+                        submit: 'Create'
+                    },
+                    themes: {
+                        stamp: 'Stamp',
+                        money: 'Money',
+                        drink: 'Drink',
+                        weapon: 'Weapon',
+                        car: 'Cars',
+                        move: 'Move',
+                        pictures: 'Pictures',
+                        books: 'Books',
+                        crockery: 'Crockery',
+                        technics: 'Technics',
+                    }
                 }
             },
             ru: {
@@ -90,6 +112,28 @@ i18n
                         onMakeAdmin: 'Сделать админом',
                         onRemoveAdmin: 'Сделать юзером',
                     },
+                    collections: {
+                        create: 'Создать коллекцию',
+                        title: 'Создать новую коллекцию',
+                        name: 'Название',
+                        theme: 'Тема',
+                        choiceTheme: 'Пожалуйста, выберите тему коллекции!',
+                        image: 'Обложка',
+                        description: 'Описание',
+                        submit: 'Создать'
+                    },
+                    themes: {
+                        stamp: 'Марки',
+                        money: 'Денеги',
+                        drink: 'Алкаголь',
+                        weapon: 'Оружие',
+                        car: 'Автомобили',
+                        move: 'Фильмы',
+                        pictures: 'Картины',
+                        books: 'Книги',
+                        crockery: 'Посуда',
+                        technics: 'Техника',
+                    }
                 }
             },
         }

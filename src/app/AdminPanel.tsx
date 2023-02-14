@@ -17,7 +17,7 @@ export const AdminPanel: React.FC = () => {
             dataIndex: 'email',
             render: (_, u) => (
                 <Space size="middle">
-                    <NavLink to={`/collection/${u._id}`}>{u.email}</NavLink>
+                    <NavLink to={`/collections/${u._id}`}>{u.email}</NavLink>
                 </Space>
             ),
         },

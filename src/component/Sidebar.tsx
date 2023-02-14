@@ -25,7 +25,7 @@ export const Sidebar: FC<SidebarPropsType> = ({collapsed}) => {
         {
             key: '2',
             icon: <ProfileOutlined/>,
-            label: (<NavLink to={`/collection/${user._id}`}>{t('sidebar.collection')}</NavLink>),
+            label: (<NavLink to={`/collections/${user._id}`}>{t('sidebar.collection')}</NavLink>),
         },
         {
             key: '3',
@@ -42,7 +42,7 @@ export const Sidebar: FC<SidebarPropsType> = ({collapsed}) => {
         {
             key: '2',
             icon: <VideoCameraOutlined/>,
-            label: (<NavLink to={`/collection/${user._id}`}>{t('sidebar.collection')}</NavLink>),
+            label: (<NavLink to={`/collections/${user._id}`}>{t('sidebar.collection')}</NavLink>),
         },
     ]
     const guest = [

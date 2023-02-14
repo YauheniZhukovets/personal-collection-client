@@ -4,7 +4,7 @@ import {useAppSelector} from '../hooks/hooks';
 import {User} from '../models/User';
 import {Home} from '../app/Home';
 import {AdminPanel} from '../app/AdminPanel';
-import {Collections} from '../app/Collections';
+import {CollectionsList} from '../app/Collections/CollectionsList';
 
 export const AppRoutes = () => {
     const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
@@ -22,8 +22,8 @@ export const AppRoutes = () => {
             {
                 user.isAdmin && <Route path={'/admin'} element={<AdminPanel/>}/>
             }
-            <Route path={'/collection'} element={<Collections/>}>
-                <Route path={'/collection/' + ':id'} element={<Collections/>}/>
+            <Route path={'/collections'} element={<CollectionsList/>}>
+                <Route path={'/collections/' + ':id'} element={<CollectionsList/>}/>
             </Route>
             <Route path={'/'} element={<Home/>}/>
             <Route path={'*'} element={<Navigate to={'/'} replace/>}/>

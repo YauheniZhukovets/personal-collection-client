@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './index.css';
+import "easymde/dist/easymde.min.css";
 import {useAppDispatch, useAppSelector} from './hooks/hooks';
 import {checkAuth, logout} from './store/thunk/authThunk';
 import {AppRoutes} from './component/AppRoutes';
@@ -133,7 +134,7 @@ export const App = () => {
                     <Content className="site-layout" style={{padding: '0 50px', margin: '16px 0'}}>
                         <AppRoutes/>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>Personal Collection ©2023 Created by Yauheni</Footer>
+                    <Footer style={{textAlign: 'center'}}>Personal Collection ©2023 Created by Yauheni Zhukovets</Footer>
                 </Layout>
             </Layout>
         </ConfigProvider>

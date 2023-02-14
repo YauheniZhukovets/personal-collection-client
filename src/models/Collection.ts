@@ -11,3 +11,10 @@ export interface Collection {
     created: Date
     updated: Date
 }
+
+export type RequestCollectionType = {
+    name: string
+    theme: string
+    description: string
+    image: string
+}
