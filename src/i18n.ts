@@ -60,7 +60,8 @@ i18n
                         description: 'Description',
                         submit: 'Create',
                         update: 'Update',
-                        titleUpdate: 'Update collection'
+                        titleUpdate: 'Update collection',
+                        fields: 'Optional fields'
                     },
                     themes: {
                         stamp: 'Stamp',
@@ -116,7 +117,7 @@ i18n
                     },
                     collections: {
                         create: 'Создать коллекцию',
-                        title: 'Создать новую коллекцию',
+                        title: 'Создание новой коллекциии',
                         name: 'Название',
                         theme: 'Тема',
                         choiceTheme: 'Пожалуйста, выберите тему коллекции!',
@@ -124,7 +125,8 @@ i18n
                         description: 'Описание',
                         submit: 'Создать',
                         update: 'Обновить',
-                        titleUpdate: 'Изменить каллекцию'
+                        titleUpdate: 'Измение каллекции',
+                        fields: 'Поля'
                     },
                     themes: {
                         stamp: 'Марки',

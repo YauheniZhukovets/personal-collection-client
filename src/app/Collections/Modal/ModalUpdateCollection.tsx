@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Button, Form, Input, message, Modal, Select, UploadProps} from 'antd';
+import React, {useCallback, useState} from 'react';
+import {Button, Form, Input, message, Modal, Select, Transfer, UploadProps} from 'antd';
 import {useAppDispatch, useAppSelector, useTranslateOptions} from '../../../hooks/hooks';
 import {StatusType} from '../../../type/Common';
 import {uploadImage} from '../../../store/thunk/uploadThunk';
@@ -8,13 +8,13 @@ import Dragger from 'antd/es/upload/Dragger';
 import {RcFile} from 'antd/es/upload';
 import {setImageUrl} from '../../../store/action/collectionAction';
 import SimpleMdeReact from 'react-simplemde-editor';
-import {CustomMarkdownOptions} from '../../../component/CustomMarkdownOptions';
 import {useTranslation} from 'react-i18next';
 import {updateCollection} from '../../../store/thunk/collectionThunk';
 import {Collection, RequestCollectionType} from '../../../models/Collection';
 import {useParams} from 'react-router-dom';
 import {themes} from '../../../shared/themeOptions';
 import {NullAnd} from '../../../type/NullAnd';
+import {fields} from '../../../shared/fields';
 
 const {Option} = Select
 
@@ -23,22 +23,26 @@ type ModalUpdateCollectionType = {
 }
 
 export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldDateItem}) => {
+    const {id} = useParams<{ id: string }>()
     const {t} = useTranslation()
-    const theme = useTranslateOptions(themes, 'themes')
     const dispatch = useAppDispatch()
+    const theme = useTranslateOptions(themes, 'themes')
+    const [form] = Form.useForm()
+    const [open, setOpen] = useState<boolean>(false)
+    const [fileList, setFileList] = useState<RcFile[]>([])
+    const [collectionText, setCollectionText] = useState<string>('')
+    const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+    const [targetKeys, setTargetKeys] = useState<string[]>(oldDateItem.fields || [])
     const status = useAppSelector<StatusType>(state => state.app.status)
     const image = useAppSelector<NullAnd<string>>(state => state.collection.imageUrl)
-    const {id} = useParams<{ id: string }>()
-    const [fileList, setFileList] = useState<RcFile[]>([])
-    const [open, setOpen] = useState(false)
-    const [form] = Form.useForm()
-    const [collectionText, setCollectionText] = useState<string>('')
 
-    useEffect(() => {
-        if (oldDateItem) {
-            return
-        }
-    }, [oldDateItem])
+
+    const handleChange = (newTargetKeys: string[]) => {
+        setTargetKeys(newTargetKeys)
+    }
+    const handleSelectChange = (sourceSelectedKeys: string[], targetSelectedKeys: string[]) => {
+        setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys])
+    }
 
 
     const handleUpload = async (file: RcFile) => {
@@ -61,13 +65,13 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
             setFileList([])
             dispatch(setImageUrl(null))
         },
-        beforeUpload: (file) => {
-            const isPic = file.type === 'image/png' || file.type === 'image/jpeg'
+        beforeUpload: (image) => {
+            const isPic = image.type === 'image/png' || image.type === 'image/jpeg'
             if (!isPic) {
-                message.error(`${file.name} is not an image`).then(r => r)
+                message.error(`${image.name} is not an image`).then(r => r)
             } else {
-                setFileList([file])
-                handleUpload(file).then(r => r)
+                setFileList([image])
+                handleUpload(image).then(r => r)
             }
             return false
         },
@@ -102,11 +106,10 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
                 title={`${t('collections.titleUpdate')}`}
                 onCancel={handleCancel}
                 footer={[]}
-                width={630}
+                width={640}
             >
                 <Form form={form}
-                      name="normal_login"
-                      className="login-form"
+                      name="update-collection"
                       onFinish={onSubmitForm}
                       labelCol={{span: 4}}
                       wrapperCol={{span: 18}}
@@ -114,24 +117,23 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
                           {
                               name: oldDateItem.name,
                               theme: oldDateItem.theme,
-                              description: oldDateItem.description
+                              description: oldDateItem.description,
+                              fields: oldDateItem.fields,
                           }
                       }
                 >
 
-                    <Form.Item
-                        label={t('collections.name')}
-                        name="name"
-                        rules={[{min: 3, message: 'Please input name collection!'}]}
+                    <Form.Item label={t('collections.name')}
+                               name="name"
+                               rules={[{min: 3, message: 'Please input name collection!'}]}
                     >
                         <Input placeholder={`${t('collections.name')}...`}/>
                     </Form.Item>
 
-                    <Form.Item
-                        label={t('collections.theme')}
-                        name="theme"
-                        hasFeedback
-                        rules={[{message: 'Please select your theme!'}]}
+                    <Form.Item label={t('collections.theme')}
+                               name="theme"
+                               hasFeedback
+                               rules={[{message: 'Please select your theme!'}]}
                     >
                         <Select placeholder={t('collections.choiceTheme')}>
                             {theme.map((el, i) => (
@@ -174,14 +176,27 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
                                         placeholder={`${t('collections.description')}...`}
                                         value={collectionText}
                                         onChange={handleTextChange}
-                                        options={CustomMarkdownOptions(collectionText)}
+                        />
+                    </Form.Item>
+
+                    <Form.Item label={t('collections.fields')}
+                               name="fields"
+                    >
+                        <Transfer
+                            dataSource={fields}
+                            titles={['Source', 'Target']}
+                            targetKeys={targetKeys}
+                            selectedKeys={selectedKeys}
+                            onChange={handleChange}
+                            onSelectChange={handleSelectChange}
+                            render={(item) => item.title}
+                            oneWay
                         />
                     </Form.Item>
 
                     <Form.Item>
                         <Button htmlType="submit"
                                 type="primary"
-                                className="login-form-button"
                                 disabled={status === 'loading'}
                         >
                             {t('collections.update')}

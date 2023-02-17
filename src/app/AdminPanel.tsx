@@ -12,6 +12,11 @@ import {routes} from '../shared/routes';
 
 export const AdminPanel: React.FC = () => {
     const {t} = useTranslation()
+    const dispatch = useAppDispatch()
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+    const status = useAppSelector<string>(state => state.app.status)
+    const u = useAppSelector<any>(state => state.user.users)
+
     const columns: ColumnsType<User> = [
         {
             title: `${t('admin.email')}`,
@@ -39,11 +44,6 @@ export const AdminPanel: React.FC = () => {
             dataIndex: 'collectionsCount',
         },
     ]
-    const dispatch = useAppDispatch()
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-    const status = useAppSelector<string>(state => state.app.status)
-    const u = useAppSelector<any>(state => state.user.users)
-
 
     const users = u.map((el: DomainUser, i: number) => {
         let admin = el.isAdmin
@@ -100,16 +100,16 @@ export const AdminPanel: React.FC = () => {
         <div>
             <div style={{marginBottom: 16, display: 'flex', gap: 5}}>
                 <Button onClick={onClickBlock} disabled={status === 'loading'}>
-                    <LockOutlined />
+                    <LockOutlined/>
                 </Button>
                 <Button onClick={onClickUnBlock} disabled={status === 'loading'}>
-                    <UnlockOutlined />
+                    <UnlockOutlined/>
                 </Button>
                 <Button onClick={onClickMakeAdmin} disabled={status === 'loading'}>
-                    <UserAddOutlined />
+                    <UserAddOutlined/>
                 </Button>
                 <Button onClick={onClickRemoveAdmin} disabled={status === 'loading'}>
-                    <UserDeleteOutlined />
+                    <UserDeleteOutlined/>
                 </Button>
                 <Button type="primary" onClick={onClickDelete} disabled={status === 'loading'}>
                     <DeleteOutlined/>

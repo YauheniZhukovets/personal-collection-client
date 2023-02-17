@@ -8,8 +8,8 @@ import {ModalCreateCollection} from './Modal/ModalCreateCollection';
 import {CollectionsItem} from './CollectionsItem';
 
 export const CollectionsList: FC = () => {
-    const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
+    const dispatch = useAppDispatch()
     const collections = useAppSelector<Collection[]>(state => state.collection.collections)
 
     useEffect(() => {
@@ -24,9 +24,6 @@ export const CollectionsList: FC = () => {
             <List itemLayout="vertical"
                   size="default"
                   pagination={{
-                      onChange: (page) => {
-                          console.log(page);
-                      },
                       pageSize: 5,
                   }}
                   dataSource={collections ? collections : []}

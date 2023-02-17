@@ -9,6 +9,7 @@ export interface Collection {
     description: string
     itemsCount: number
     image?: NullAnd<string>
+    fields?: string[]
     created: Date
     updated: Date
 }
@@ -19,4 +20,5 @@ export type RequestCollectionType = {
     theme: string
     description: string
     image: NullAnd<string>
+    fields?: string[]
 }

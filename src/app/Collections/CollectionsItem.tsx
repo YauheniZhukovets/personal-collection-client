@@ -10,6 +10,7 @@ import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 import {deleteCollection} from '../../store/thunk/collectionThunk';
 import {ErrorImage} from '../../component/UI/ErrorImage';
 import {ModalUpdateCollection} from './Modal/ModalUpdateCollection';
+import {routes} from '../../shared/routes';
 
 
 type CollectionsItemProps = {
@@ -17,8 +18,8 @@ type CollectionsItemProps = {
 }
 
 export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
-    const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
+    const dispatch = useAppDispatch()
 
     const onClickRemoveCollection = (CollectionId: string) => {
         dispatch(deleteCollection(id!, CollectionId))
@@ -53,7 +54,11 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                 }
             >
                 <List.Item.Meta
-                    title={<NavLink to={`/collection/${id}`}>{item.name}</NavLink>}
+                    title={
+                        <NavLink to={`${routes.COLLECTIONS}/${id}${routes.ITEMS}/${item._id}`}>
+                            {item.name}
+                        </NavLink>
+                    }
                     description={item.theme}
                 />
                 {<ReactMarkdown children={item.description}/>}
