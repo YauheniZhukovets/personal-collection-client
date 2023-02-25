@@ -7,18 +7,22 @@ import {FormInstance} from 'antd/es/form/hooks/useForm';
 type TagsType = {
     form: FormInstance
     name: string
-    initialTags?: string[]
+    tags: string[]
+    setTags: (tags: string[]) => void
 }
 
 
-export const Tags: FC<TagsType> = ({form,name, initialTags}) => {
+export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
     const [inputVisible, setInputVisible] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
     const [editInputIndex, setEditInputIndex] = useState<number>(-1)
     const [editInputValue, setEditInputValue] = useState<string>('')
-    const [tags, setTags] = useState<string[]>(initialTags || [])
     const inputRef = useRef<InputRef>(null)
     const editInputRef = useRef<InputRef>(null)
+
+    useEffect(() => {
+        form.setFieldsValue({[name]: tags})
+    }, [tags])
 
     useEffect(() => {
         if (inputVisible) {
@@ -28,7 +32,6 @@ export const Tags: FC<TagsType> = ({form,name, initialTags}) => {
 
     useEffect(() => {
         editInputRef.current?.focus()
-        form.setFieldsValue({[name]: tags})
     }, [inputValue])
 
     const handleClose = (removedTag: string) => {
@@ -94,7 +97,7 @@ export const Tags: FC<TagsType> = ({form,name, initialTags}) => {
                     const tagElem = (
                         <Tag
                             key={tag}
-                            closable={index !== 0}
+                            closable
                             style={{userSelect: 'none'}}
                             onClose={() => handleClose(tag)}
                         >

@@ -2,13 +2,13 @@ import {AppThunk} from '../../type/Store';
 import axios from 'axios';
 import {setStatus} from '../action/appAction';
 import {ItemService} from '../../service/ItemService';
-import {setItems} from '../action/itemAction';
+import {setItem, setItems} from '../action/itemAction';
 import {RequestItemType} from '../../models/Item';
 
-export const fetchItems = (cId: string, sort?: string): AppThunk => async (dispatch) => {
+export const fetchItems = (cId?: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setStatus('loading'))
-        const res = await ItemService.fetchItems(cId, sort)
+        const res = await ItemService.fetchItems(cId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
     } catch (e) {
@@ -19,10 +19,39 @@ export const fetchItems = (cId: string, sort?: string): AppThunk => async (dispa
     }
 }
 
-export const createItem = (data: RequestItemType): AppThunk => async (dispatch) => {
+export const fetchItem = (cId: string, iId:string): AppThunk => async (dispatch) => {
     try {
         dispatch(setStatus('loading'))
-        const res = await ItemService.createItem(data)
+        const res = await ItemService.fetchItem(cId, iId)
+        dispatch(setItem(res.data))
+        dispatch(setStatus('succeeded'))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response?.data?.message)
+        }
+        dispatch(setStatus('failed'))
+    }
+}
+
+
+export const createItem = (data: RequestItemType, uId:string): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setStatus('loading'))
+        const res = await ItemService.createItem(data, uId)
+        dispatch(setItems(res.data))
+        dispatch(setStatus('succeeded'))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response?.data?.message)
+        }
+        dispatch(setStatus('failed'))
+    }
+}
+
+export const updateItem = (data: RequestItemType, uId:string, iId:string ): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setStatus('loading'))
+        const res = await ItemService.updateItem(data, uId, iId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
     } catch (e) {

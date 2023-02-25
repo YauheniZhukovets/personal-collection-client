@@ -5,6 +5,7 @@ export const routes = {
     LIKE: '/like',
     COLLECTIONS: '/collections',
     ITEMS: '/items',
+    ITEM: '/item',
     ADMIN: '/admin'
 }
 

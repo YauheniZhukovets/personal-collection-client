@@ -1,6 +1,7 @@
 import {User} from './User';
 import {Collection} from './Collection';
 import {NullAnd} from '../type/NullAnd';
+import {Like} from './Like';
 
 export interface Item {
     _id: string
@@ -9,24 +10,24 @@ export interface Item {
     title: string
     countComments: number
     tags: string[]
-    likes: any []
+    likes: Like []
     string1: NullAnd<string>
     string2: NullAnd<string>
     string3: NullAnd<string>
     text1: NullAnd<string>
     text2: NullAnd<string>
     text3: NullAnd<string>
-    number1: NullAnd<number>
-    number2: NullAnd<number>
-    number3: NullAnd<number>
-    boolean1: NullAnd<boolean>
-    boolean2: NullAnd<boolean>
-    boolean3: NullAnd<boolean>
+    number1: number
+    number2: number
+    number3: number
+    boolean1: boolean
+    boolean2: boolean
+    boolean3: boolean
     date1: NullAnd<string>
     date2: NullAnd<string>
     date3: NullAnd<string>
-    created: Date
-    updated: Date
+    created: string
+    updated: string
 }
 
 export type RequestItemType = {

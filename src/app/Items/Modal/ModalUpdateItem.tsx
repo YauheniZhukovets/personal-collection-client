@@ -5,12 +5,12 @@ import {StatusType} from '../../../type/Common';
 import {useTranslation} from 'react-i18next';
 import {Fields} from '../../../type/Fields';
 import SimpleMdeReact from 'react-simplemde-editor';
-import {Tags} from '../../../component/UI/Tags';
-import {Item, RequestItemType} from '../../../models/Item';
-import {createItem} from '../../../store/thunk/itemThunk';
+import {TagsUI} from '../../../component/UI/TagsUI';
+import {Item} from '../../../models/Item';
 import {useParams} from 'react-router-dom';
 import {EditTwoTone} from '@ant-design/icons';
 import moment from 'moment';
+import {updateItem} from '../../../store/thunk/itemThunk';
 
 type ModalCreateItemType = {
     fieldsOptional: Fields[]
@@ -20,16 +20,18 @@ type ModalCreateItemType = {
 export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, item}) => {
     const dateFormat = 'YYYY-MM-DD'
     const {t} = useTranslation()
-    const {cId} = useParams<{ cId: string }>()
+    const {id, cId} = useParams<{ id: string, cId: string }>()
     const [form] = Form.useForm()
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState<boolean>(false)
+    const [tags, setTags] = useState<string[]>(item.tags || [])
     const [collectionText1, setCollectionText1] = useState<string>('')
     const [collectionText2, setCollectionText2] = useState<string>('')
     const [collectionText3, setCollectionText3] = useState<string>('')
     const status = useAppSelector<StatusType>(state => state.app.status)
+    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
 
-     const handleOpen = () => {
+    const handleOpen = () => {
         setOpen(true)
     }
 
@@ -37,8 +39,15 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
         setOpen(false)
     }
 
-    const onSubmitForm = async (values: RequestItemType) => {
-        await dispatch(createItem({...values, collectionId: cId!}))
+    const onSubmitForm = async (fieldsValues: any) => {
+        const values = {
+            ...fieldsValues,
+            date1: fieldsValues.date1?.format(dateFormat),
+            date2: fieldsValues.date2?.format(dateFormat),
+            date3: fieldsValues.date3?.format(dateFormat),
+        }
+
+        await dispatch(updateItem({...values, collectionId: cId!}, id!, item._id))
         if (status === 'succeeded') {
             handleCancel()
             form.resetFields()
@@ -57,13 +66,13 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
 
     return (
         <div>
-            <Button onClick={handleOpen}>
+            <Button disabled={!isAuth} onClick={handleOpen}>
                 <EditTwoTone/>
             </Button>
 
             <Modal
                 open={open}
-                title={'Create new item'}
+                title={t('item.titleUpdate')}
                 onCancel={handleCancel}
                 footer={[]}
                 width={640}
@@ -92,36 +101,36 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                           date3: moment(item.date3, dateFormat),
                       }}
                 >
-                    <Form.Item label={'Title'}
+                    <Form.Item label={t('item.name')}
                                name="title"
-                               rules={[{required: true, min: 3, message: 'Please input name title!'}]}
+                               rules={[{required: true, message: 'Please input title!'}]}
                     >
-                        <Input placeholder={`Title...`}/>
+                        <Input placeholder={`${t('item.name')}...`}/>
                     </Form.Item>
 
                     {fieldsOptional.map(f => f.description).includes('string1') &&
-                        <Form.Item label={'Weight'}
+                        <Form.Item label={t('item.string1')}
                                    name={'string1'}
                         >
-                            <Input placeholder={'Weight'}/>
+                            <Input placeholder={`${t('item.string1')}...`}/>
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('string2') &&
-                        <Form.Item label={'Price'}
+                        <Form.Item label={t('item.string2')}
                                    name={'string2'}
                         >
-                            <Input placeholder={'Price...'}/>
+                            <Input placeholder={`${t('item.string2')}...`}/>
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('string3') &&
-                        <Form.Item label={'Sizes'}
+                        <Form.Item label={t('item.string3')}
                                    name={'string3'}
                         >
-                            <Input placeholder={'Sizes...'}/>
+                            <Input placeholder={`${t('item.string3')}...`}/>
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('number1') &&
-                        <Form.Item label={'Count'}
+                        <Form.Item label={t('item.number1')}
                                    name={'number1'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -130,7 +139,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('number2') &&
-                        <Form.Item label={'Total count release'}
+                        <Form.Item label={t('item.number2')}
                                    name={'number2'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -139,7 +148,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('number3') &&
-                        <Form.Item label={'Power'}
+                        <Form.Item label={t('item.number3')}
                                    name={'number3'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -148,7 +157,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('boolean1') &&
-                        <Form.Item label={'Has damage'}
+                        <Form.Item label={t('item.boolean1')}
                                    name={'boolean1'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -158,7 +167,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('boolean2') &&
-                        <Form.Item label={'New'}
+                        <Form.Item label={t('item.boolean2')}
                                    name={'boolean2'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -168,7 +177,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('boolean3') &&
-                        <Form.Item label={'Limited edition'}
+                        <Form.Item label={t('item.boolean3')}
                                    name={'boolean3'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -178,7 +187,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('date1') &&
-                        <Form.Item label={'Release start date'}
+                        <Form.Item label={t('item.date1')}
                                    name={'date1'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -187,7 +196,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('date2') &&
-                        <Form.Item label={'Release date'}
+                        <Form.Item label={t('item.date2')}
                                    name={'date2'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -196,7 +205,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('date3') &&
-                        <Form.Item label={'Release end date'}
+                        <Form.Item label={t('item.date3')}
                                    name={'date3'}
                                    labelCol={{span: 6}}
                                    wrapperCol={{span: 16}}
@@ -205,42 +214,46 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('text1') &&
-                        <Form.Item label={'Description'}
+                        <Form.Item label={t('item.text1')}
                                    name="text1"
                         >
                             <SimpleMdeReact id="text1"
-                                            placeholder={`Description...`}
+                                            placeholder={`${t('item.text1')}...`}
                                             value={collectionText1}
                                             onChange={handleTextChange1}
                             />
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('text2') &&
-                        <Form.Item label={'About author'}
+                        <Form.Item label={t('item.text2')}
                                    name="text2"
                         >
                             <SimpleMdeReact id="text2"
-                                            placeholder={`About author...`}
+                                            placeholder={`${t('item.text2')}...`}
                                             value={collectionText2}
                                             onChange={handleTextChange2}
                             />
                         </Form.Item>
                     }
                     {fieldsOptional.map(f => f.description).includes('text3') &&
-                        <Form.Item label={'History'}
+                        <Form.Item label={t('item.text3')}
                                    name="text3"
                         >
                             <SimpleMdeReact id="text3"
-                                            placeholder={`History...`}
+                                            placeholder={`${t('item.text3')}...`}
                                             value={collectionText3}
                                             onChange={handleTextChange3}
                             />
                         </Form.Item>
                     }
-                    <Form.Item label={'Tags'}
+                    <Form.Item label={t('item.tags')}
                                name={'tags'}
                     >
-                        <Tags name={'tags'} form={form} initialTags={item.tags}/>
+                        <TagsUI name={'tags'}
+                                form={form}
+                                tags={tags}
+                                setTags={setTags}
+                        />
                     </Form.Item>
 
                     <Form.Item>
@@ -248,7 +261,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
                                 type="primary"
                                 disabled={status === 'loading'}
                         >
-                            {t('collections.submit')}
+                            {t('item.update')}
                         </Button>
                     </Form.Item>
                 </Form>

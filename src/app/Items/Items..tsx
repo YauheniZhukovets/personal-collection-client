@@ -2,24 +2,29 @@ import React, {FC, useEffect} from 'react';
 import {NavLink, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {deleteItem, fetchItems} from '../../store/thunk/itemThunk';
-import {Button, Space, Table, Tag} from 'antd';
+import {Button, Checkbox, Space, Table, Tag} from 'antd';
 import {Item} from '../../models/Item';
 import {ColumnsType} from 'antd/es/table';
 import {fields} from '../../shared/fields';
-import {DeleteTwoTone} from '@ant-design/icons';
+import {DeleteTwoTone, LeftCircleOutlined} from '@ant-design/icons';
 import {ModalCreateItem} from './Modal/ModalCreateItem';
 import {Fields} from '../../type/Fields';
 import {Collection} from '../../models/Collection';
 import {fetchCollections} from '../../store/thunk/collectionThunk';
 import {ModalUpdateItem} from './Modal/ModalUpdateItem';
+import {useTranslation} from 'react-i18next';
+import {routes} from '../../shared/routes';
+import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 
 
 export const Items: FC = () => {
     const dispatch = useAppDispatch()
+    const {t} = useTranslation()
     const {id, cId} = useParams<{ id: string, cId: string }>()
     const i = useAppSelector<Item[]>(state => state.item.items)
     const collections = useAppSelector<Collection[]>(state => state.collection.collections)
     const fieldsInCollection = collections.filter(c => c._id === cId).map(c => c.fields)[0]
+    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
 
     const items = i.map((el, i) => ({...el, key: i}))
 
@@ -38,22 +43,30 @@ export const Items: FC = () => {
     const optionFields: Fields[] = fields.filter(el => fieldsInCollection?.includes(el.key))
     const defaultColumns: ColumnsType<Item> = [
         {
-            title: 'Title',
+            title: `${t('item.name')}`,
             dataIndex: 'title',
-            render: (text) => <NavLink to={''}>{text}</NavLink>,
+            sorter: (a, b) => {
+                const nameA = a.title.toLowerCase()
+                const nameB = b.title.toLowerCase()
+                return (nameA < nameB ? -1 : nameA > nameB ? 1 : 0)
+            },
+            render: (text, item) => (
+                <NavLink to={`${routes.COLLECTIONS}/${id}${routes.ITEMS}/${cId}${routes.ITEM}/${item._id}`}>
+                    {text.slice(0, 20)}
+                </NavLink>)
         },
         {
-            title: 'Action',
+            title: `${t('item.action')}`,
             key: 'action',
             render: (_, item) => (
                 <Space style={{minWidth: 100}}>
                     <ModalUpdateItem fieldsOptional={optionFields} item={item}/>
-                    <Button onClick={() => onClickDeleteItem(item._id)}><DeleteTwoTone/></Button>
+                    <Button disabled={!isAuth} onClick={() => onClickDeleteItem(item._id)}><DeleteTwoTone/></Button>
                 </Space>
             ),
         },
         {
-            title: 'Tags',
+            title: `${t('item.tags')}`,
             dataIndex: 'tags',
             render: (_, {tags}) => (
                 <>
@@ -66,13 +79,35 @@ export const Items: FC = () => {
             ),
         }
     ]
-    const optionalColumns: ColumnsType<Item> = optionFields.map(el => {
+    const optionalColumns: ColumnsType<Item> = optionFields.map((f) => {
         return (
             {
-                title: el.title,
-                key: el.key,
-                dataIndex: el.description,
-                render: (el) => <div>{el}</div>,
+                title: f.title,
+                key: f.key,
+                dataIndex: f.description,
+                filters: f.key === '10' ? [{text: 'True', value: true}, {text: 'False', value: false}] :
+                        f.key === '11' ? [{text: 'True', value: true}, {text: 'False', value: false}] :
+                        f.key === '12' ? [{text: 'True', value: true}, {text: 'False', value: false}] : undefined,
+                sorter: f.key === '7' ? (a, b) => a.number1 - b.number1 :
+                        f.key === '8' ? (a, b) => a.number2 - b.number2 :
+                        f.key === '9' ? (a, b) => a.number3 - b.number3 : undefined
+                ,
+                onFilter: f.key === '10' ?  (value, item) => item.boolean1 === value:
+                        f.key === '11' ?  (value, item) => item.boolean2 === value:
+                        f.key === '12' ?  (value, item) => item.boolean3 === value : undefined
+
+                ,
+                render: (el) => {
+                    return (<>
+                        {
+                            typeof el === 'boolean'
+                                ? <Checkbox checked={el}/>
+                                : el !== null
+                                    ? <ReactMarkdown children={`${el}`}/>
+                                    : ''
+                        }
+                    </>)
+                }
             }
         )
     })
@@ -80,7 +115,10 @@ export const Items: FC = () => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
-            <ModalCreateItem fieldsOptional={optionFields}/>
+            <div style={{display: 'flex', alignItems: 'center', gap: 15}}>
+                <NavLink to={`${routes.COLLECTIONS}/${id}`}><Button><LeftCircleOutlined/></Button></NavLink>
+                <ModalCreateItem fieldsOptional={optionFields}/>
+            </div>
             <Table columns={columns} dataSource={items} scroll={{x: true}}/>
         </div>
     )

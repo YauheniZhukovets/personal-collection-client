@@ -8,7 +8,7 @@ export interface Collection {
     theme: string
     description: string
     itemsCount: number
-    image?: NullAnd<string>
+    image?: string
     fields?: string[]
     created: Date
     updated: Date

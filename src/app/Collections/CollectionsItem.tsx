@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {useAppDispatch} from '../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {NavLink, useParams} from 'react-router-dom';
 import {Collection} from '../../models/Collection';
 import {Button, Image, List} from 'antd';
@@ -19,10 +19,11 @@ type CollectionsItemProps = {
 
 export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
     const {id} = useParams<{ id: string }>()
+    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
     const dispatch = useAppDispatch()
 
-    const onClickRemoveCollection = (CollectionId: string) => {
-        dispatch(deleteCollection(id!, CollectionId))
+    const onClickRemoveCollection = (collectionId: string) => {
+        dispatch(deleteCollection(id!, collectionId))
     }
 
     return (
@@ -31,12 +32,9 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                 key={item._id}
                 actions={[
                     <IconText icon={UserOutlined} text={`${item.user.name}`} key="list-vertical-user"/>,
-                    <IconText icon={FileOutlined} text={`${item.itemsCount}`}
-                              key="list-vertical-count-item"/>,
-
-                    <ModalUpdateCollection oldDateItem={item}/>
-                    ,
-                    <Button onClick={() => onClickRemoveCollection(item._id)}>
+                    <IconText icon={FileOutlined} text={`${item.itemsCount}`} key="list-vertical-count-item"/>,
+                     <ModalUpdateCollection oldDateItem={item}/>,
+                     <Button disabled={!isAuth} onClick={() => onClickRemoveCollection(item._id)}>
                         <DeleteTwoTone/>
                     </Button>,
                 ]}

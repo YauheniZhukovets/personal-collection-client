@@ -4,7 +4,8 @@ import {NullAnd} from '../../type/NullAnd';
 
 const initialState = {
     collections: [] as Collection[],
-    imageUrl: null as NullAnd<string>
+    maxItemCollections: [] as Collection[],
+    imageUrl: null as NullAnd<string>,
 }
 
 type InitialStateType = typeof initialState
@@ -16,6 +17,9 @@ export const collectionReducer = (state = initialState, action: ActionCollection
         }
         case 'COLLECTION/SET-URL-IMAGE': {
             return {...state, imageUrl: action.imgUrl}
+        }
+        case 'COLLECTION/SET-MAX-ITEMS-COLLECTIONS': {
+            return {...state, maxItemCollections: action.collections}
         }
         default:
             return state

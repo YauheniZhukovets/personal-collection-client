@@ -8,6 +8,7 @@ import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {DeleteOutlined, LockOutlined, UnlockOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
 import {routes} from '../shared/routes';
+import {useDebounce} from 'usehooks-ts';
 
 
 export const AdminPanel: React.FC = () => {
@@ -16,7 +17,7 @@ export const AdminPanel: React.FC = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
     const status = useAppSelector<string>(state => state.app.status)
     const u = useAppSelector<any>(state => state.user.users)
-
+    const debouncedUsers = useDebounce<User[]>(u, 10000)
     const columns: ColumnsType<User> = [
         {
             title: `${t('admin.email')}`,
@@ -59,7 +60,7 @@ export const AdminPanel: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchUsers())
-    }, [])
+    }, [debouncedUsers])
 
 
     const onClickBlock = () => {

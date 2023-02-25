@@ -35,6 +35,7 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
     const [targetKeys, setTargetKeys] = useState<string[]>(oldDateItem.fields || [])
     const status = useAppSelector<StatusType>(state => state.app.status)
     const image = useAppSelector<NullAnd<string>>(state => state.collection.imageUrl)
+    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
 
 
     const handleChange = (newTargetKeys: string[]) => {
@@ -97,7 +98,7 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
     }
     return (
         <div style={{marginRight: 5}}>
-            <Button onClick={handleOpen}>
+            <Button disabled={!isAuth} onClick={handleOpen}>
                 <EditTwoTone/>
             </Button>
 

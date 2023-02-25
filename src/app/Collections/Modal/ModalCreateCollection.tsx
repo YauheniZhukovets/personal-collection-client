@@ -107,7 +107,7 @@ export const ModalCreateCollection: React.FC = () => {
 
                     <Form.Item label={t('collections.name')}
                                name="name"
-                               rules={[{required: true, min: 3, message: 'Please input name collection!'}]}
+                               rules={[{required: true, message: 'Please input name collection!'}]}
                     >
                         <Input placeholder={`${t('collections.name')}...`}/>
                     </Form.Item>

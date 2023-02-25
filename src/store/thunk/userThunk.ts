@@ -7,7 +7,6 @@ import {setStatus} from '../action/appAction';
 
 export const fetchUsers = (): AppThunk => async (dispatch) => {
     try {
-        dispatch(setStatus('loading'))
         const res = await UserService.fetchUsers()
         dispatch(setUsers(res.data))
         dispatch(setStatus('succeeded'))
