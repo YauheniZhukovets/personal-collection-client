@@ -12,8 +12,10 @@ import {routes} from '../../shared/routes';
 export const CollectionsList: FC = () => {
     const {id} = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
     const collections = useAppSelector<Collection[]>(state => state.collection.collections)
+
+    const user = useAppSelector(state => state.auth.user)
+    const show = user._id !== id && !user.isAdmin
 
     useEffect(() => {
         if (id) {
@@ -25,7 +27,7 @@ export const CollectionsList: FC = () => {
         <>
             <div style={{display: 'flex', alignItems: 'center', gap: 15}}>
                 <NavLink to={routes.HOME}><Button><LeftCircleOutlined/></Button></NavLink>
-                {isAuth && <ModalCreateCollection/>}
+                {!show && <ModalCreateCollection/>}
             </div>
 
             <List itemLayout="vertical"

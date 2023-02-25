@@ -26,7 +26,9 @@ export const ModalCreateItem: React.FC<ModalCreateItemType> = ({fieldsOptional})
     const [collectionText3, setCollectionText3] = useState<string>('')
     const [tags, setTags] = useState<string[]>([])
     const status = useAppSelector<StatusType>(state => state.app.status)
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
+
+    const user = useAppSelector(state => state.auth.user)
+    const show = user._id !== id && !user.isAdmin
 
     const handleOpen = () => {
         setOpen(true)
@@ -64,7 +66,7 @@ export const ModalCreateItem: React.FC<ModalCreateItemType> = ({fieldsOptional})
 
     return (
         <div>
-            {isAuth && <Button onClick={handleOpen}
+            {!show && <Button onClick={handleOpen}
                                type="primary"
             >
                 {t('item.create')}

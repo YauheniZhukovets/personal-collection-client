@@ -61,7 +61,10 @@ i18n
                         submit: 'Create',
                         update: 'Update',
                         titleUpdate: 'Update collection',
-                        fields: 'Optional fields'
+                        fields: 'Optional fields',
+                        dragInfo: 'Click or drag image to this area to upload',
+                        all: 'All',
+                        selected: 'Selected'
                     },
                     themes: {
                         stamp: 'Stamp',
@@ -84,6 +87,7 @@ i18n
                         update: 'Update',
                         titleUpdate: 'Edit item',
                         tags: 'Tags',
+                        newTag: 'New tag',
                         string1: 'Weight',
                         string2: 'Price',
                         string3: 'Sizes',
@@ -99,6 +103,19 @@ i18n
                         date1: 'Release start date',
                         date2: 'Release date',
                         date3: 'Release end date',
+                    },
+                    comment: {
+                        title: 'Comments',
+                        placeholder: 'Comment...',
+                        button: 'New comment',
+                    },
+                    main: {
+                        tags: 'Tags',
+                        collectionsInfo: 'Collections with the most items',
+                        itemsInfo: 'Latest added items',
+                        itemCount: 'Item count',
+                        likeCount: 'Likes',
+                        commentCount: 'Comments',
                     },
                 }
             },
@@ -151,7 +168,10 @@ i18n
                         submit: 'Создать',
                         update: 'Обновить',
                         titleUpdate: 'Изменение каллекции',
-                        fields: 'Поля'
+                        fields: 'Поля',
+                        dragInfo: 'Кликните или перетащите обложку в область загрузки',
+                        all: 'Все',
+                        selected: 'Выбранные'
                     },
                     themes: {
                         stamp: 'Марки',
@@ -174,6 +194,7 @@ i18n
                         update: 'Обновить',
                         titleUpdate: 'Изменение элемента',
                         tags: 'Тэги',
+                        newTag: 'Новый тег',
                         string1: 'Вес',
                         string2: 'Цена',
                         string3: 'Размер',
@@ -189,6 +210,19 @@ i18n
                         date1: 'Дата старта релиза',
                         date2: 'Дата релиза',
                         date3: 'Дата завершения релиза',
+                    },
+                    comment: {
+                        title: 'Комментарии',
+                        placeholder: 'Комментарий...',
+                        button: 'Новый комментарий',
+                    },
+                    main: {
+                        tags: 'Тэги',
+                        collectionsInfo: 'Коллекции с наибольшим числом элементов',
+                        itemsInfo: 'Последние добавленные элементы',
+                        itemCount: 'К-во элементов',
+                        likeCount: 'К-во лайков',
+                        commentCount: 'К-во комментариев',
                     },
                 }
             },

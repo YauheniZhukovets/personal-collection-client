@@ -3,6 +3,7 @@ import type {InputRef} from 'antd';
 import {Input, Space, Tag, Tooltip} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import {FormInstance} from 'antd/es/form/hooks/useForm';
+import {useTranslation} from 'react-i18next';
 
 type TagsType = {
     form: FormInstance
@@ -13,6 +14,7 @@ type TagsType = {
 
 
 export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
+    const {t} = useTranslation()
     const [inputVisible, setInputVisible] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
     const [editInputIndex, setEditInputIndex] = useState<number>(-1)
@@ -44,7 +46,7 @@ export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value)
+        setInputValue(e.target.value.toUpperCase())
     }
 
     const handleInputConfirm = () => {
@@ -135,7 +137,7 @@ export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
                 />
             ) : (
                 <Tag style={tagPlusStyle} onClick={showInput}>
-                    <PlusOutlined/> New Tag
+                    <PlusOutlined/> {t('item.newTag')}
                 </Tag>
             )}
         </Space>

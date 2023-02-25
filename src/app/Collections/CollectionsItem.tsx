@@ -19,8 +19,10 @@ type CollectionsItemProps = {
 
 export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
     const {id} = useParams<{ id: string }>()
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
     const dispatch = useAppDispatch()
+
+    const user = useAppSelector(state => state.auth.user)
+    const disable = user._id !== id && !user.isAdmin
 
     const onClickRemoveCollection = (collectionId: string) => {
         dispatch(deleteCollection(id!, collectionId))
@@ -34,7 +36,7 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                     <IconText icon={UserOutlined} text={`${item.user.name}`} key="list-vertical-user"/>,
                     <IconText icon={FileOutlined} text={`${item.itemsCount}`} key="list-vertical-count-item"/>,
                      <ModalUpdateCollection oldDateItem={item}/>,
-                     <Button disabled={!isAuth} onClick={() => onClickRemoveCollection(item._id)}>
+                     <Button disabled={disable} onClick={() => onClickRemoveCollection(item._id)}>
                         <DeleteTwoTone/>
                     </Button>,
                 ]}

@@ -4,9 +4,9 @@ import {setStatus} from '../action/appAction';
 import {LikeService} from '../../service/LikeService';
 import {fetchItem} from './itemThunk';
 
-export const likeItem = (uId: string, cId: string, iId: string): AppThunk => async (dispatch) => {
+export const likeItem = (cId: string, iId: string): AppThunk => async (dispatch) => {
     try {
-        await LikeService.likeItem(uId, iId)
+        await LikeService.likeItem(iId)
         dispatch(fetchItem(cId, iId))
         dispatch(setStatus('succeeded'))
     } catch (e) {
@@ -17,9 +17,9 @@ export const likeItem = (uId: string, cId: string, iId: string): AppThunk => asy
     }
 }
 
-export const dislikeItem = (uId: string, cId: string, iId: string): AppThunk => async (dispatch) => {
+export const dislikeItem = (cId: string, iId: string): AppThunk => async (dispatch) => {
     try {
-        await LikeService.dislikeItem(uId, iId)
+        await LikeService.dislikeItem(iId)
         dispatch(fetchItem(cId, iId))
         dispatch(setStatus('succeeded'))
     } catch (e) {

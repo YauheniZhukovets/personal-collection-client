@@ -29,7 +29,8 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
     const [collectionText2, setCollectionText2] = useState<string>('')
     const [collectionText3, setCollectionText3] = useState<string>('')
     const status = useAppSelector<StatusType>(state => state.app.status)
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
+    const user = useAppSelector(state => state.auth.user)
+    const disable = user._id !== id && !user.isAdmin
 
     const handleOpen = () => {
         setOpen(true)
@@ -66,7 +67,7 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
 
     return (
         <div>
-            <Button disabled={!isAuth} onClick={handleOpen}>
+            <Button disabled={disable} onClick={handleOpen}>
                 <EditTwoTone/>
             </Button>
 

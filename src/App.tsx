@@ -23,6 +23,8 @@ import {Item} from './models/Item';
 const {Header, Content, Footer} = Layout
 
 export const App = () => {
+    const {defaultAlgorithm, darkAlgorithm} = theme
+    const {i18n, t} = useTranslation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isInitialize = useAppSelector<boolean>(state => state.auth.isInitialize)
@@ -30,13 +32,12 @@ export const App = () => {
     const status = useAppSelector<StatusType>(state => state.app.status)
     const search = useAppSelector<string>(state => state.app.search)
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
+    const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
+    const items = useAppSelector<Item[]>(state => state.item.items)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
-    const {i18n, t} = useTranslation()
-    const {defaultAlgorithm, darkAlgorithm} = theme
     const debouncedSearch = useDebounce(search, 500)
-    const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
 
     useEffect(() => {
         const theme = localStorage.getItem('theme')
@@ -64,7 +65,7 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(fetchTags())
-    }, [])
+    }, [items])
 
     const onClickLogout = () => {
         dispatch(logout())
@@ -139,7 +140,7 @@ export const App = () => {
                                 onSelect={onSelect}
                                 onSearch={onSearchInput}
                             >
-                                <Input size="middle" placeholder="Search..."/>
+                                <Input size="middle" placeholder={`${t('header.search')}`}/>
                             </AutoComplete>
                         </div>
                         <div style={{display: 'flex', gap: 5}}>

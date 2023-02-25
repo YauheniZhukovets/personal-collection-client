@@ -24,7 +24,9 @@ export const Items: FC = () => {
     const i = useAppSelector<Item[]>(state => state.item.items)
     const collections = useAppSelector<Collection[]>(state => state.collection.collections)
     const fieldsInCollection = collections.filter(c => c._id === cId).map(c => c.fields)[0]
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
+
+    const user = useAppSelector(state => state.auth.user)
+    const disable = user._id !== id && !user.isAdmin
 
     const items = i.map((el, i) => ({...el, key: i}))
 
@@ -61,7 +63,7 @@ export const Items: FC = () => {
             render: (_, item) => (
                 <Space style={{minWidth: 100}}>
                     <ModalUpdateItem fieldsOptional={optionFields} item={item}/>
-                    <Button disabled={!isAuth} onClick={() => onClickDeleteItem(item._id)}><DeleteTwoTone/></Button>
+                    <Button disabled={disable} onClick={() => onClickDeleteItem(item._id)}><DeleteTwoTone/></Button>
                 </Space>
             ),
         },

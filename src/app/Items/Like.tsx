@@ -12,14 +12,15 @@ type LikeProps = {
 
 export const Like: FC<LikeProps> = ({item}) => {
     const dispatch = useAppDispatch()
-    const {id, cId} = useParams<{ id: string, cId: string }>()
+    const {cId} = useParams<{ id: string, cId: string }>()
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    const like = item.likes.find(l => l.user === id)
+    const userId = useAppSelector(state => state.auth.user._id)
+    const like = item.likes.find(l => l.user === userId)
 
     const onClickLike = () => {
         if (isAuth) {
-            !like && dispatch(likeItem(id!, cId!, item._id))
-            !!like && dispatch(dislikeItem(id!, cId!, item._id))
+            !like && dispatch(likeItem(cId!, item._id))
+            !!like && dispatch(dislikeItem(cId!, item._id))
         } else {
             message.error('Please register or login')
         }

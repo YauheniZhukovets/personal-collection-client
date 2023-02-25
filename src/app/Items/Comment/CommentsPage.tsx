@@ -7,10 +7,12 @@ import {IComment} from '../../../models/Comments';
 import {StatusType} from '../../../type/Common';
 import {createComment, fetchComments} from '../../../store/thunk/commentThunk';
 import {useDebounce} from 'usehooks-ts';
+import {useTranslation} from 'react-i18next';
 
 const {Title} = Typography;
 
 export const CommentsPage: FC = () => {
+    const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [text, setText] = useState<string>('')
     const comments = useAppSelector<IComment[]>(state => state.comments.comments)
@@ -48,7 +50,7 @@ export const CommentsPage: FC = () => {
 
     return (
         <Space direction="vertical" size="small" style={{display: 'flex'}}>
-            <Title style={{textAlign: 'center'}} level={4}>Comments</Title>
+            <Title style={{textAlign: 'center'}} level={4}>{t('comment.title')}</Title>
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -71,13 +73,13 @@ export const CommentsPage: FC = () => {
                     style={{height: 120, resize: 'none', width: '100%'}}
                     onChange={onChangeTextArea}
                     onKeyPress={onKeyPressText}
-                    placeholder="Comment..."
+                    placeholder={`${t('comment.placeholder')}`}
                 />
                 <div style={{display: 'flex', justifyContent: 'end'}}>
                     <Button onClick={handleSubmit}
                             disabled={status === 'loading' || !isAuth}
                     >
-                        New comment
+                        {t('comment.button')}
                     </Button>
                 </div>
             </div>

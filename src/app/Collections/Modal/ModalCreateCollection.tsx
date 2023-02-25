@@ -129,7 +129,7 @@ export const ModalCreateCollection: React.FC = () => {
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined/>
                             </p>
-                            <p className="ant-upload-text">Click or drag image to this area to upload</p>
+                            <p className="ant-upload-text">{t('collections.dragInfo')}</p>
                         </Dragger>
                     </Form.Item>
 
@@ -149,7 +149,7 @@ export const ModalCreateCollection: React.FC = () => {
                     >
                         <Transfer
                             dataSource={fields}
-                            titles={['Source', 'Target']}
+                            titles={[`${t('collections.all')}`, `${t('collections.selected')}`]}
                             targetKeys={targetKeys}
                             selectedKeys={selectedKeys}
                             onChange={handleChange}

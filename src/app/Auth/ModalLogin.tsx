@@ -24,7 +24,6 @@ export const ModalLogin: React.FC = () => {
         if (status === 'succeeded') {
             handleCancel()
         }
-
     }
 
     return (

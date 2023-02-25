@@ -8,6 +8,7 @@ import Meta from 'antd/es/card/Meta';
 import {NavLink} from 'react-router-dom';
 import {routes} from '../shared/routes';
 import {ErrorImage} from '../component/UI/ErrorImage';
+import {useTranslation} from 'react-i18next';
 
 const contentStyle: React.CSSProperties = {
     margin: 0,
@@ -15,12 +16,13 @@ const contentStyle: React.CSSProperties = {
     background: '#b9b9b9',
 }
 export const MainPage: FC = () => {
+    const {t} = useTranslation()
     const latestItems = useAppSelector<Item[]>(state => state.item.latestItems)
     const maxItemCollections = useAppSelector<Collection[]>(state => state.collection.maxItemCollections)
 
     return (
         <>
-            <Divider plain>Collections with the most items</Divider>
+            <Divider plain>{t('main.collectionsInfo')}</Divider>
             {
                 maxItemCollections.length
                     ? <Carousel effect="fade">
@@ -56,7 +58,7 @@ export const MainPage: FC = () => {
                                             description={el.theme}
                                         />
                                         <p>{`${el.description.slice(0, 40)}...`}</p>
-                                        <p>{`Items count: ${el.itemsCount}`}</p>
+                                        <p>{`${t('main.itemCount')}: ${el.itemsCount}`}</p>
                                     </Card>
                                 </div>
 
@@ -65,7 +67,7 @@ export const MainPage: FC = () => {
                     </Carousel>
                     : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
             }
-            <Divider plain>Latest added items</Divider>
+            <Divider plain>{t('main.itemsInfo')}</Divider>
             {
                 latestItems.length
                     ? <Carousel effect="fade">
@@ -89,8 +91,8 @@ export const MainPage: FC = () => {
                                             )}
                                             description={`${el.created.slice(0, 10)}`}
                                         />
-                                        <p>Likes: {el.likes.length}</p>
-                                        <p>Comments: {el.countComments}</p>
+                                        <p>{t('main.likeCount')}: {el.likes.length}</p>
+                                        <p>{t('main.commentCount')}: {el.countComments}</p>
                                     </Card>
                                 </div>
 

@@ -35,8 +35,9 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
     const [targetKeys, setTargetKeys] = useState<string[]>(oldDateItem.fields || [])
     const status = useAppSelector<StatusType>(state => state.app.status)
     const image = useAppSelector<NullAnd<string>>(state => state.collection.imageUrl)
-    const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
 
+    const user = useAppSelector(state => state.auth.user)
+    const disable = user._id !== id && !user.isAdmin
 
     const handleChange = (newTargetKeys: string[]) => {
         setTargetKeys(newTargetKeys)
@@ -98,7 +99,7 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
     }
     return (
         <div style={{marginRight: 5}}>
-            <Button disabled={!isAuth} onClick={handleOpen}>
+            <Button disabled={disable} onClick={handleOpen}>
                 <EditTwoTone/>
             </Button>
 
@@ -148,7 +149,7 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined/>
                             </p>
-                            <p className="ant-upload-text">Click or drag image to this area to upload</p>
+                            <p className="ant-upload-text">{t('collections.dragInfo')}</p>
                         </Dragger>
                         {
                             image && oldDateItem.image
@@ -185,7 +186,7 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
                     >
                         <Transfer
                             dataSource={fields}
-                            titles={['Source', 'Target']}
+                            titles={[`${t('collections.all')}`, `${t('collections.selected')}`]}
                             targetKeys={targetKeys}
                             selectedKeys={selectedKeys}
                             onChange={handleChange}
