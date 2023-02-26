@@ -9,6 +9,7 @@ import {NavLink} from 'react-router-dom';
 import {routes} from '../shared/routes';
 import {ErrorImage} from '../component/UI/ErrorImage';
 import {useTranslation} from 'react-i18next';
+import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 
 const contentStyle: React.CSSProperties = {
     margin: 0,
@@ -57,7 +58,7 @@ export const MainPage: FC = () => {
                                             )}
                                             description={el.theme}
                                         />
-                                        <p>{`${el.description.slice(0, 40)}...`}</p>
+                                        <ReactMarkdown children={`${el.description.slice(0, 40)}...`}/>
                                         <p>{`${t('main.itemCount')}: ${el.itemsCount}`}</p>
                                     </Card>
                                 </div>
