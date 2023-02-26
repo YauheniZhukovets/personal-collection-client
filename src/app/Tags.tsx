@@ -4,11 +4,12 @@ import {Divider, Empty} from 'antd';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setSelectedTags} from '../store/action/appAction';
 import {useTranslation} from 'react-i18next';
+import {Tag} from '../models/Tag';
 
 export const Tags: FC = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
-    const tags = useAppSelector<string[]>(state => state.app.tags)
+    const tags = useAppSelector<Tag[]>(state => state.app.tags)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
 
     const handleChange = (tag: string, checked: boolean) => {
@@ -23,11 +24,11 @@ export const Tags: FC = () => {
                 <div style={{background: '#b9b9b9', borderRadius: 10, padding: 10}}>
                     {tags.map((tag) => (
                         <CheckableTag
-                            key={tag}
-                            checked={selectedTags.includes(tag)}
-                            onChange={(checked) => handleChange(tag, checked)}
+                            key={tag._id}
+                            checked={selectedTags.includes(tag.title)}
+                            onChange={(checked) => handleChange(tag.title, checked)}
                         >
-                            {tag}
+                            {tag.title}
                         </CheckableTag>
                     ))}
                 </div>
