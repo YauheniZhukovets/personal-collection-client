@@ -17,7 +17,7 @@ export const Tags: FC = () => {
 
     useEffect(() => {
         dispatch(fetchTags())
-    }, [tags, items])
+    }, [items])
 
     const handleChange = (tag: string, checked: boolean) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter((t) => t !== tag)
