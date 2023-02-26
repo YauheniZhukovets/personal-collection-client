@@ -16,7 +16,7 @@ import {useNavigate} from 'react-router-dom';
 import {routes} from './shared/routes';
 import {setSearchText, setSelectedTags} from './store/action/appAction';
 import {useDebounce} from 'usehooks-ts';
-import {fetchSearchItems} from './store/thunk/commonThunk';
+import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
 
 
@@ -37,6 +37,11 @@ export const App = () => {
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
     const debouncedSearch = useDebounce(search, 500)
+    const items = useAppSelector<Item[]>(state => state.item.items)
+
+    useEffect(() => {
+        dispatch(fetchTags())
+    }, [items])
 
     useEffect(() => {
         const theme = localStorage.getItem('theme')
