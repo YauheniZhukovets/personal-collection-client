@@ -34,6 +34,7 @@ export const App = () => {
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
     const items = useAppSelector<Item[]>(state => state.item.items)
+    const tags = useAppSelector<Tags[]>(state => state.app.tags)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
@@ -65,7 +66,7 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(fetchTags())
-    }, [items])
+    }, [items, tags])
 
     const onClickLogout = () => {
         dispatch(logout())
