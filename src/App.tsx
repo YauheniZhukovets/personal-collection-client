@@ -18,6 +18,7 @@ import {setSearchText, setSelectedTags} from './store/action/appAction';
 import {useDebounce} from 'usehooks-ts';
 import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
+import {Tag} from './models/Tag';
 
 
 const {Header, Content, Footer} = Layout
@@ -34,7 +35,7 @@ export const App = () => {
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
     const items = useAppSelector<Item[]>(state => state.item.items)
-    const tags = useAppSelector<Tags[]>(state => state.app.tags)
+    const tags = useAppSelector<Tag[]>(state => state.app.tags)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
