@@ -1,16 +1,23 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import CheckableTag from 'antd/es/tag/CheckableTag';
 import {Divider, Empty} from 'antd';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setSelectedTags} from '../store/action/appAction';
 import {useTranslation} from 'react-i18next';
 import {Tag} from '../models/Tag';
+import {fetchTags} from '../store/thunk/commonThunk';
+import {Item} from '../models/Item';
 
 export const Tags: FC = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const tags = useAppSelector<Tag[]>(state => state.app.tags)
+    const items = useAppSelector<Item[]>(state => state.item.items)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
+
+    useEffect(() => {
+        dispatch(fetchTags())
+    }, [tags, items])
 
     const handleChange = (tag: string, checked: boolean) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter((t) => t !== tag)
