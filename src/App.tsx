@@ -6,7 +6,7 @@ import {checkAuth, logout} from './store/thunk/authThunk';
 import {AppRoutes} from './component/AppRoutes';
 import {ModalLogin} from './app/Auth/ModalLogin';
 import {ModalRegistration} from './app/Auth/ModalRegistration';
-import {AutoComplete, Button, ConfigProvider, Input, Layout, Switch, theme} from 'antd';
+import {AutoComplete, Button, ConfigProvider, Input, Layout, message, Switch, theme} from 'antd';
 import {StatusType} from './type/Common';
 import {useTranslation} from 'react-i18next';
 import {MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
@@ -18,6 +18,7 @@ import {setSearchText, setSelectedTags} from './store/action/appAction';
 import {useDebounce} from 'usehooks-ts';
 import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
+import {NullAnd} from './type/NullAnd';
 
 
 const {Header, Content, Footer} = Layout
@@ -33,11 +34,18 @@ export const App = () => {
     const search = useAppSelector<string>(state => state.app.search)
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
+    const error = useAppSelector<NullAnd<string>>(state => state.app.error)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
     const debouncedSearch = useDebounce(search, 500)
     const items = useAppSelector<Item[]>(state => state.item.items)
+
+    useEffect(() => {
+        if (error) {
+            message.error(error)
+        }
+    }, [error])
 
     useEffect(() => {
         dispatch(fetchTags())

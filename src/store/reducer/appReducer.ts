@@ -1,6 +1,7 @@
 import {ActionAppType} from '../type/appType';
 import {LanguageType, StatusType} from '../../type/Common';
 import {Tag} from '../../models/Tag';
+import {NullAnd} from '../../type/NullAnd';
 
 const initialState = {
     status: 'idle' as StatusType,
@@ -8,6 +9,7 @@ const initialState = {
     search: '',
     tags: [] as Tag[],
     selectedTags: [] as string[],
+    error: null as NullAnd<string>
 }
 
 type InitialStateType = typeof initialState
@@ -28,6 +30,9 @@ export const appReducer = (state = initialState, action: ActionAppType): Initial
         }
         case 'APP/SET-SELECTED-TAGS' : {
             return {...state, selectedTags: action.tags}
+        }
+        case 'APP/SET-ERROR': {
+            return {...state, error: action.error}
         }
         default:
             return state

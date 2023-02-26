@@ -26,7 +26,7 @@ api.interceptors.response.use((config) => {
             console.log('Не авторизован')
         }
     }
-    throw Error
+    throw error
 })
 
 export default api

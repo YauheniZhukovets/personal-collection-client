@@ -4,7 +4,7 @@ import {setAuth, setInitialize, setUser} from '../action/authAction';
 import axios from 'axios';
 import {User} from '../../models/User';
 import {AuthResponse} from '../../models/AuthResponse';
-import {setStatus} from '../action/appAction';
+import {setError, setStatus} from '../action/appAction';
 
 export const login = (email: string, password: string): AppThunk => async (dispatch) => {
     try {
@@ -14,9 +14,10 @@ export const login = (email: string, password: string): AppThunk => async (dispa
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
+        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            console.log(e.response?.data?.message)
+            dispatch(setError(e.response?.data?.message))
         }
         dispatch(setStatus('failed'))
     }
@@ -30,9 +31,10 @@ export const registration = (email: string, name: string | undefined, password: 
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
+        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            console.log(e.response?.data?.message)
+            dispatch(setError(e.response?.data?.message))
         }
         dispatch(setStatus('failed'))
     }
@@ -47,9 +49,10 @@ export const logout = (): AppThunk => async (dispatch) => {
         dispatch(setAuth(false))
         dispatch(setUser({} as User))
         dispatch(setStatus('succeeded'))
+        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            console.log(e.response?.data?.message)
+            dispatch(setError(e.response?.data?.message))
         }
         dispatch(setStatus('failed'))
     }
@@ -63,11 +66,12 @@ export const checkAuth = (): AppThunk => async (dispatch) => {
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
+        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
             console.log(e.response?.data?.message)
-            dispatch(setStatus('failed'))
         }
+        dispatch(setStatus('failed'))
     } finally {
         dispatch(setInitialize())
     }

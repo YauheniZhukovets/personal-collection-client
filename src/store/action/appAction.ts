@@ -1,5 +1,6 @@
 import {LanguageType, StatusType} from '../../type/Common';
 import {Tag} from '../../models/Tag';
+import {NullAnd} from '../../type/NullAnd';
 
 export const setStatus = (status: StatusType) => {
     return {type: 'APP/SET-STATUS', status} as const
@@ -15,4 +16,7 @@ export const setTags = (tags: Tag[]) => {
 }
 export const setSelectedTags = (tags: string[]) => {
     return {type: 'APP/SET-SELECTED-TAGS', tags} as const
+}
+export const setError = (error: NullAnd<string>) => {
+    return {type: 'APP/SET-ERROR', error} as const
 }
