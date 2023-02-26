@@ -61,7 +61,7 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                     }
                     description={item.theme}
                 />
-                {<ReactMarkdown children={item.description}/>}
+                <ReactMarkdown children={item.description}/>
             </List.Item>
         </>
     )
