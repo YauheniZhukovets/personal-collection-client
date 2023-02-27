@@ -14,10 +14,10 @@ export const fetchCollectionsAndItems = (): AppThunk => async (dispatch) => {
         dispatch(setMaxItemsCollections(res.data.collections))
         dispatch(setLatestItems(res.data.items))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -29,10 +29,10 @@ export const fetchSearchItems = (searchText?: string): AppThunk => async (dispat
         const res = await ItemService.fetchItems(undefined, searchText, tags)
         dispatch(setSearchItems(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -44,10 +44,10 @@ export const fetchTags = (): AppThunk => async (dispatch) => {
         const res = await TagService.fetchTags()
         dispatch(setTags(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }

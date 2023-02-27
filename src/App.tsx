@@ -14,7 +14,7 @@ import {Backdrop, CircularProgress} from '@mui/material';
 import {Sidebar} from './component/Sidebar';
 import {useNavigate} from 'react-router-dom';
 import {routes} from './shared/routes';
-import {setSearchText, setSelectedTags} from './store/action/appAction';
+import {setError, setSearchText, setSelectedTags} from './store/action/appAction';
 import {useDebounce} from 'usehooks-ts';
 import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
@@ -44,6 +44,11 @@ export const App = () => {
     useEffect(() => {
         if (error) {
             message.error(error)
+        }
+        return () => {
+            setTimeout(()=>{
+                dispatch(setError(null))
+            },2000)
         }
     }, [error])
 

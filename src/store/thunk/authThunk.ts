@@ -14,10 +14,10 @@ export const login = (email: string, password: string): AppThunk => async (dispa
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -31,10 +31,10 @@ export const registration = (email: string, name: string | undefined, password: 
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -49,10 +49,10 @@ export const logout = (): AppThunk => async (dispatch) => {
         dispatch(setAuth(false))
         dispatch(setUser({} as User))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -66,10 +66,10 @@ export const checkAuth = (): AppThunk => async (dispatch) => {
         dispatch(setAuth(true))
         dispatch(setUser(res.data.user))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            console.log(e.response?.data?.message)
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            console.log(error)
         }
         dispatch(setStatus('failed'))
     } finally {

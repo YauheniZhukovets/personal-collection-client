@@ -9,11 +9,10 @@ export const likeItem = (cId: string, iId: string): AppThunk => async (dispatch)
         await LikeService.likeItem(iId)
         dispatch(fetchItem(cId, iId))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
@@ -23,11 +22,10 @@ export const dislikeItem = (cId: string, iId: string): AppThunk => async (dispat
         await LikeService.dislikeItem(iId)
         dispatch(fetchItem(cId, iId))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }

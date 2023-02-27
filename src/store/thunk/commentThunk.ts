@@ -9,10 +9,10 @@ export const fetchComments = (iId: string): AppThunk => async (dispatch) => {
         const res = await CommentService.fetchComments(iId)
         dispatch(setComments(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -24,10 +24,10 @@ export const createComment = (iId: string, text: string): AppThunk => async (dis
         const res = await CommentService.createComments(text, iId)
         dispatch(setComments(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -39,10 +39,10 @@ export const updateComment = (iId: string, commentId: string, text: string): App
         const res = await CommentService.updateComment(iId, commentId, text)
         dispatch(setComments(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }
@@ -54,10 +54,10 @@ export const deleteComment = (iId: string, commentId: string): AppThunk => async
         const res = await CommentService.deleteComment(iId, commentId)
         dispatch(setComments(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))
         }
         dispatch(setStatus('failed'))
     }

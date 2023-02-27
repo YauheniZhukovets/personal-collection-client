@@ -11,11 +11,10 @@ export const uploadImage = (file: RcFile): AppThunk => async (dispatch) => {
         const res = await UploadService.uploadImage(file)
         dispatch(setImageUrl(res.data.url.toString()))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }

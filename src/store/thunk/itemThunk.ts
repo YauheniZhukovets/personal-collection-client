@@ -11,11 +11,10 @@ export const fetchItems = (cId?: string): AppThunk => async (dispatch) => {
         const res = await ItemService.fetchItems(cId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
@@ -26,11 +25,10 @@ export const fetchItem = (cId: string, iId:string): AppThunk => async (dispatch)
         const res = await ItemService.fetchItem(cId, iId)
         dispatch(setItem(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
@@ -42,11 +40,10 @@ export const createItem = (data: RequestItemType, uId:string): AppThunk => async
         const res = await ItemService.createItem(data, uId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
@@ -57,11 +54,10 @@ export const updateItem = (data: RequestItemType, uId:string, iId:string ): AppT
         const res = await ItemService.updateItem(data, uId, iId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
@@ -72,11 +68,10 @@ export const deleteItem = (id: string, cId: string, iId: string): AppThunk => as
         const res = await ItemService.deleteItem(id, cId, iId)
         dispatch(setItems(res.data))
         dispatch(setStatus('succeeded'))
-        dispatch(setError(null))
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(setError(e.response?.data?.message))
-        }
+            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
+            dispatch(setError(error))        }
         dispatch(setStatus('failed'))
     }
 }
