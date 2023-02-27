@@ -4,6 +4,7 @@ import {AuthValueType, StatusType} from '../../type/Common';
 import {login} from '../../store/thunk/authThunk';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
+import {GoogleOutlined} from '@ant-design/icons';
 
 export const ModalLogin: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -24,6 +25,10 @@ export const ModalLogin: React.FC = () => {
         if (status === 'succeeded') {
             handleCancel()
         }
+    }
+
+    const googleAuth = () => {
+        window.open(`${process.env.REACT_APP_API_URL}/auth/google/callback`, '_self')
     }
 
     return (
@@ -56,14 +61,21 @@ export const ModalLogin: React.FC = () => {
                     >
                         <Input.Password/>
                     </Form.Item>
-                    <Form.Item>
-                        <Button htmlType="submit"
-                                type="primary"
-                                disabled={status === 'loading'}
-                        >
-                            {t('signIn.signIn')}
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'start'}}>
+                        <Form.Item>
+                            <Button htmlType="submit"
+                                    type="primary"
+                                    disabled={status === 'loading'}
+                            >
+                                {t('signIn.signIn')}
+                            </Button>
+                        </Form.Item>
+
+                        <span>{t('signIn.or')}</span>
+                        <Button onClick={googleAuth} icon={<GoogleOutlined/>}>
+                            <span>{t('signIn.signInGoogle')}</span>
                         </Button>
-                    </Form.Item>
+                    </div>
                 </Form>
             </Modal>
         </div>

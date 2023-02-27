@@ -19,6 +19,7 @@ import {useDebounce} from 'usehooks-ts';
 import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
 import {NullAnd} from './type/NullAnd';
+import {User} from './models/User';
 
 
 const {Header, Content, Footer} = Layout
@@ -29,7 +30,7 @@ export const App = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isInitialize = useAppSelector<boolean>(state => state.auth.isInitialize)
-    const email = useAppSelector<string>(state => state.auth.user.email)
+    const user = useAppSelector<User>(state => state.auth.user)
     const status = useAppSelector<StatusType>(state => state.app.status)
     const search = useAppSelector<string>(state => state.app.search)
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
@@ -174,10 +175,10 @@ export const App = () => {
                                 />
                             </div>
                             {
-                                email ?
+                                user.email ?
                                     <div style={{display: 'flex'}}>
                                         <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
-                                            <div style={{color: 'lightgrey'}}>{email}</div>
+                                            <div style={{color: 'lightgrey'}}>{user.name || user.email}</div>
                                             <Button onClick={onClickLogout}
                                                     disabled={status === 'loading'}
                                             >

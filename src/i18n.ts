@@ -26,6 +26,8 @@ i18n
                         signIn: 'Sign In',
                         email: 'Email',
                         password: 'Password',
+                        or: 'or',
+                        signInGoogle: 'Sign in with Google'
                     },
                     signUp: {
                         username: 'Name',
@@ -133,6 +135,8 @@ i18n
                         signIn: 'Войти',
                         email: 'Почта',
                         password: 'Пароль',
+                        or: 'или',
+                        signInGoogle: 'Войти с помощью Google'
                     },
                     signUp: {
                         username: 'Имя',
