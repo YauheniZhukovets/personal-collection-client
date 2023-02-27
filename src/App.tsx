@@ -35,11 +35,13 @@ export const App = () => {
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
     const selectedTags = useAppSelector<string[]>(state => state.app.selectedTags)
     const error = useAppSelector<NullAnd<string>>(state => state.app.error)
+    const items = useAppSelector<Item[]>(state => state.item.items)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [language, setLanguage] = useState<string>('en')
     const [collapsed, setCollapsed] = useState(true)
     const debouncedSearch = useDebounce(search, 500)
-    const items = useAppSelector<Item[]>(state => state.item.items)
+    const debouncedTags = useDebounce(items, 5000)
+
 
     useEffect(() => {
         if (error) {
@@ -54,7 +56,7 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(fetchTags())
-    }, [items])
+    }, [debouncedTags])
 
     useEffect(() => {
         const theme = localStorage.getItem('theme')

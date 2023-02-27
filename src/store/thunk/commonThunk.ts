@@ -40,7 +40,6 @@ export const fetchSearchItems = (searchText?: string): AppThunk => async (dispat
 
 export const fetchTags = (): AppThunk => async (dispatch) => {
     try {
-        dispatch(setStatus('loading'))
         const res = await TagService.fetchTags()
         dispatch(setTags(res.data))
         dispatch(setStatus('succeeded'))
