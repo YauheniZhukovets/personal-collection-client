@@ -3,6 +3,7 @@ import {AuthResponse} from '../models/AuthResponse';
 
 const api = axios.create({
     //https://personal-collection-server.vercel.app/api
+    //baseURL: 'https://personal-collection-server.vercel.app/api',
     baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
     withCredentials: true,
 })

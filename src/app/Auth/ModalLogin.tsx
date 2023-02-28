@@ -28,7 +28,7 @@ export const ModalLogin: React.FC = () => {
     }
 
     const googleAuth = () => {
-        window.open(`${process.env.REACT_APP_API_URL}/auth/google/callback`, '_self')
+        window.open(`${process.env.REACT_APP_API_URL}/auth/google`, '_self')
     }
 
     return (
