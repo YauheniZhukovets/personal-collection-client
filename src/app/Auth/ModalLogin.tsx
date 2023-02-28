@@ -5,6 +5,7 @@ import {login} from '../../store/thunk/authThunk';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
 import {GoogleOutlined} from '@ant-design/icons';
+import {getGoogleOAuthUrl} from '../../shared/getGoogleUrl';
 
 export const ModalLogin: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -75,6 +76,8 @@ export const ModalLogin: React.FC = () => {
                         <Button onClick={googleAuth} icon={<GoogleOutlined/>}>
                             <span>{t('signIn.signInGoogle')}</span>
                         </Button>
+
+                        <a href={getGoogleOAuthUrl()}>LOGIN</a>
                     </div>
                 </Form>
             </Modal>
