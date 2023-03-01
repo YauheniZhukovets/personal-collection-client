@@ -14,8 +14,4 @@ export class AuthService {
     static async logout(): Promise<void> {
         return api.post('/auth/logout',)
     }
-
-    static async google(): Promise<AxiosResponse<AuthResponse>> {
-        return api.get<AuthResponse>('/auth/login/success',)
-    }
 }

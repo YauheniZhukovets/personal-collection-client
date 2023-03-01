@@ -7,7 +7,6 @@ import {CollectionsList} from '../app/Collections/CollectionsList';
 import {routes} from '../shared/routes';
 import {Items} from '../app/Items/Items.';
 import {ItemPage} from '../app/Items/ItemPage';
-import {GoogleAuth} from '../app/Auth/GoogleAuth';
 
 export const AppRoutes = () => {
     const isAdmin = useAppSelector<boolean>(state => state.auth.user.isAdmin)
@@ -22,7 +21,6 @@ export const AppRoutes = () => {
             </Route>
             <Route path={`${routes.COLLECTIONS}/:id${routes.ITEMS}/:cId`} element={<Items/>}/>
             <Route path={`${routes.COLLECTIONS}/:id${routes.ITEMS}/:cId${routes.ITEM}/:iId`} element={<ItemPage/>}/>
-            <Route path={'/google'} element={<GoogleAuth/>}/>
             <Route path={routes.HOME} element={<Home/>}/>
             <Route path={'*'} element={<Navigate to={routes.HOME} replace/>}/>
         </Routes>

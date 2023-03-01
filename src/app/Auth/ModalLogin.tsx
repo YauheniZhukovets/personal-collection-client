@@ -6,12 +6,15 @@ import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
 import {GoogleOutlined} from '@ant-design/icons';
 import {getGoogleOAuthUrl} from '../../shared/getGoogleUrl';
+import {useLocation} from 'react-router-dom';
 
 export const ModalLogin: React.FC = () => {
     const dispatch = useAppDispatch()
     const status = useAppSelector<StatusType>(state => state.app.status)
     const [open, setOpen] = useState(false)
     const {t} = useTranslation()
+    const location = useLocation();
+    let from = ((location.state as any)?.from?.pathname as string) || '/'
 
     const showModal = () => {
         setOpen(true)
@@ -26,10 +29,6 @@ export const ModalLogin: React.FC = () => {
         if (status === 'succeeded') {
             handleCancel()
         }
-    }
-
-    const googleAuth = () => {
-        window.open(`${process.env.REACT_APP_API_URL}/auth/google`, '_self')
     }
 
     return (
@@ -73,11 +72,9 @@ export const ModalLogin: React.FC = () => {
                         </Form.Item>
 
                         <span>{t('signIn.or')}</span>
-                        <Button onClick={googleAuth} icon={<GoogleOutlined/>}>
-                            <span>{t('signIn.signInGoogle')}</span>
+                        <Button icon={<GoogleOutlined/>}>
+                            <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
                         </Button>
-
-                        <a href={getGoogleOAuthUrl()}>LOGIN</a>
                     </div>
                 </Form>
             </Modal>
