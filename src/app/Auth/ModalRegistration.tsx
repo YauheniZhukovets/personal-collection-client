@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Button, Form, Input, Modal} from 'antd';
+import {Button, Form, Input, Modal, Space} from 'antd';
 import {AuthValueType, StatusType} from '../../type/Common';
 import {registration} from '../../store/thunk/authThunk';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
-import {GoogleOutlined} from '@ant-design/icons';
+import {GithubOutlined, GoogleOutlined} from '@ant-design/icons';
 import {getGoogleOAuthUrl} from '../../shared/getGoogleUrl';
 import {useLocation} from 'react-router-dom';
+import {getGitHubUrl} from '../../shared/getGitHubUrl';
 
 export const ModalRegistration: React.FC = () => {
     const [open, setOpen] = useState(false)
@@ -80,11 +81,15 @@ export const ModalRegistration: React.FC = () => {
                         </Form.Item>
 
                         <span>{t('signIn.or')}</span>
-                        <Button icon={<GoogleOutlined/>}>
-                            <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
-                        </Button>
+                        <Space direction="vertical">
+                            <Button icon={<GoogleOutlined/>}>
+                                <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
+                            </Button>
+                            <Button icon={<GithubOutlined/>}>
+                                <a href={getGitHubUrl(from)}>{` SignIn with GitHub`}</a>
+                            </Button>
+                        </Space>
                     </div>
-
                 </Form>
             </Modal>
         </div>
