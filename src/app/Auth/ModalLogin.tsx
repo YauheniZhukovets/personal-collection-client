@@ -78,7 +78,7 @@ export const ModalLogin: React.FC = () => {
                                 <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
                             </Button>
                             <Button icon={<GithubOutlined />}>
-                                <a href={getGitHubUrl(from)}>{` SignIn with GitHub`}</a>
+                                <a href={getGitHubUrl(from)}>{` ${t('signIn.signInGitHub')}`}</a>
                             </Button>
                         </Space>
                     </div>

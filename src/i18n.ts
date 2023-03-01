@@ -27,7 +27,8 @@ i18n
                         email: 'Email',
                         password: 'Password',
                         or: 'or',
-                        signInGoogle: 'Sign in with Google'
+                        signInGoogle: 'Sign in with Google',
+                        signInGitHub: 'Sign in with GitHub'
                     },
                     signUp: {
                         username: 'Name',
@@ -136,7 +137,8 @@ i18n
                         email: 'Почта',
                         password: 'Пароль',
                         or: 'или',
-                        signInGoogle: 'Войти с помощью Google'
+                        signInGoogle: 'Войти с помощью Google',
+                        signInGitHub: 'Войти с помощью GitHub'
                     },
                     signUp: {
                         username: 'Имя',
