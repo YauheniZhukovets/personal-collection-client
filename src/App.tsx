@@ -20,6 +20,7 @@ import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
 import {NullAnd} from './type/NullAnd';
 import {User} from './models/User';
+import {setSearchItems} from './store/action/itemAction';
 
 
 const {Header, Content, Footer} = Layout
@@ -112,6 +113,7 @@ export const App = () => {
         if (i) {
             navigate(`${routes.COLLECTIONS}/${i.user}${routes.ITEMS}/${i.collectionName}${routes.ITEM}/${i._id}`)
             dispatch(setSelectedTags([]))
+            dispatch(setSearchItems([]))
         }
     }
 

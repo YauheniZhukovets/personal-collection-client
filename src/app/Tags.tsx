@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {setSelectedTags} from '../store/action/appAction';
 import {useTranslation} from 'react-i18next';
 import {Tag} from '../models/Tag';
+import {setSearchItems} from '../store/action/itemAction';
 
 export const Tags: FC = () => {
     const {t} = useTranslation()
@@ -26,6 +27,7 @@ export const Tags: FC = () => {
                         <CheckableTag
                             key={tag._id}
                             checked={selectedTags.includes(tag.title)}
+                            onClick={() => dispatch(setSearchItems([]))}
                             onChange={(checked) => handleChange(tag.title, checked)}
                         >
                             {tag.title}
