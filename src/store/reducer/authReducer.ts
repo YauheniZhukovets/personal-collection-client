@@ -7,9 +7,9 @@ const initialState = {
     isInitialize: false
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateAuthType = typeof initialState
 
-export const authReducer = (state = initialState, action: ActionAuthType): InitialStateType => {
+export const authReducer = (state = initialState, action: ActionAuthType): InitialStateAuthType => {
     switch (action.type) {
         case 'AUTH/SET-AUTH': {
             return {...state, isAuth: action.isAuth}
