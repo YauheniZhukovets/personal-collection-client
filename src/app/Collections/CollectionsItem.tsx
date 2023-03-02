@@ -44,10 +44,7 @@ export const CollectionsItem: FC<CollectionsItemProps> = React.memo(({item}) => 
                     item.image !== null
                         ?
                         <div className={s.imgWrap}>
-                            <Image width={250}
-                                   height={150}
-                                   src={`${item.image}`}
-                            />
+                            <Image src={`${item.image}`}/>
                         </div>
                         :
                         <ErrorImage/>

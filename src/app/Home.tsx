@@ -15,7 +15,7 @@ export const Home: FC = () => {
     return (
         <Space direction="vertical"
                size="middle"
-               style={{display: 'flex', margin: '0 auto', minWidth: '350px', maxWidth: '60%'}}
+               style={{display: 'flex', margin: '0 auto', minWidth: '200px', maxWidth: '60%'}}
         >
             <Tags/>
             <MainPage/>

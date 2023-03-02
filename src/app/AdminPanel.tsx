@@ -116,7 +116,7 @@ export const AdminPanel: React.FC = React.memo(() => {
                     <DeleteOutlined/>
                 </Button>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={users}/>
+            <Table rowSelection={rowSelection} columns={columns} dataSource={users} scroll={{x: true}}/>
         </div>
     )
 })

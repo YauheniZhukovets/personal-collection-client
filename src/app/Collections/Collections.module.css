@@ -10,3 +10,22 @@
     object-position: 0 0;
 }
 
+@media screen and (max-width: 800px) {
+    .imgWrap {
+        width: 200px;
+        height: 175px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .imgWrap {
+        width: 150px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .imgWrap {
+       display: none;
+    }
+}
