@@ -50,9 +50,9 @@ export const App = () => {
             message.error(error)
         }
         return () => {
-            setTimeout(()=>{
+            setTimeout(() => {
                 dispatch(setError(null))
-            },2000)
+            }, 2000)
         }
     }, [error])
 
@@ -180,7 +180,9 @@ export const App = () => {
                                 user.email ?
                                     <div style={{display: 'flex'}}>
                                         <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
-                                            <div style={{color: 'lightgrey'}}>{user.name || user.email}</div>
+                                            <div style={{color: 'lightgrey'}}>
+                                                {(user.name && user.name.split(' ')[0]) || user.email.split('@')[0]}
+                                            </div>
                                             <Button onClick={onClickLogout}
                                                     disabled={status === 'loading'}
                                             >
