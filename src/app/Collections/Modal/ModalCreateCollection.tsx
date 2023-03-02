@@ -17,7 +17,7 @@ import {createCollection} from '../../../store/thunk/collectionThunk';
 
 const {Option} = Select
 
-export const ModalCreateCollection: React.FC = () => {
+export const ModalCreateCollection: React.FC = React.memo(() => {
     const {id} = useParams<{ id: string }>()
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
@@ -171,4 +171,4 @@ export const ModalCreateCollection: React.FC = () => {
             </Modal>
         </div>
     );
-}
+})

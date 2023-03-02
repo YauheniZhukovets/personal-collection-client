@@ -9,7 +9,7 @@ import {getGoogleOAuthUrl} from '../../shared/getGoogleUrl';
 import {useLocation} from 'react-router-dom';
 import {getGitHubUrl} from '../../shared/getGitHubUrl';
 
-export const ModalLogin: React.FC = () => {
+export const ModalLogin: React.FC = React.memo(() => {
     const dispatch = useAppDispatch()
     const status = useAppSelector<StatusType>(state => state.app.status)
     const [open, setOpen] = useState(false)
@@ -77,7 +77,7 @@ export const ModalLogin: React.FC = () => {
                             <Button icon={<GoogleOutlined/>}>
                                 <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
                             </Button>
-                            <Button icon={<GithubOutlined />}>
+                            <Button icon={<GithubOutlined/>}>
                                 <a href={getGitHubUrl(from)}>{` ${t('signIn.signInGitHub')}`}</a>
                             </Button>
                         </Space>
@@ -86,4 +86,4 @@ export const ModalLogin: React.FC = () => {
             </Modal>
         </div>
     );
-}
+})

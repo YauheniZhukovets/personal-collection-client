@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {Tag} from '../models/Tag';
 import {setSearchItems} from '../store/action/itemAction';
 
-export const Tags: FC = () => {
+export const Tags: FC = React.memo(() => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const tags = useAppSelector<Tag[]>(state => state.app.tags)
@@ -39,4 +39,4 @@ export const Tags: FC = () => {
             }
         </>
     )
-}
+})

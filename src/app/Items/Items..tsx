@@ -17,7 +17,7 @@ import {routes} from '../../shared/routes';
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 
 
-export const Items: FC = () => {
+export const Items: FC = React.memo(() => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const {id, cId} = useParams<{ id: string, cId: string }>()
@@ -88,15 +88,15 @@ export const Items: FC = () => {
                 key: f.key,
                 dataIndex: f.description,
                 filters: f.key === '10' ? [{text: 'True', value: true}, {text: 'False', value: false}] :
-                        f.key === '11' ? [{text: 'True', value: true}, {text: 'False', value: false}] :
+                    f.key === '11' ? [{text: 'True', value: true}, {text: 'False', value: false}] :
                         f.key === '12' ? [{text: 'True', value: true}, {text: 'False', value: false}] : undefined,
                 sorter: f.key === '7' ? (a, b) => a.number1 - b.number1 :
-                        f.key === '8' ? (a, b) => a.number2 - b.number2 :
+                    f.key === '8' ? (a, b) => a.number2 - b.number2 :
                         f.key === '9' ? (a, b) => a.number3 - b.number3 : undefined
                 ,
-                onFilter: f.key === '10' ?  (value, item) => item.boolean1 === value:
-                        f.key === '11' ?  (value, item) => item.boolean2 === value:
-                        f.key === '12' ?  (value, item) => item.boolean3 === value : undefined
+                onFilter: f.key === '10' ? (value, item) => item.boolean1 === value :
+                    f.key === '11' ? (value, item) => item.boolean2 === value :
+                        f.key === '12' ? (value, item) => item.boolean3 === value : undefined
 
                 ,
                 render: (el) => {
@@ -124,4 +124,4 @@ export const Items: FC = () => {
             <Table columns={columns} dataSource={items} scroll={{x: true}}/>
         </div>
     )
-}
+})

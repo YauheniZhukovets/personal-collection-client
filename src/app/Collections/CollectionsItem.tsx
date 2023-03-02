@@ -17,7 +17,7 @@ type CollectionsItemProps = {
     item: Collection
 }
 
-export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
+export const CollectionsItem: FC<CollectionsItemProps> = React.memo(({item}) => {
     const {id} = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
 
@@ -35,8 +35,8 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
                 actions={[
                     <IconText icon={UserOutlined} text={`${item.user.name}`} key="list-vertical-user"/>,
                     <IconText icon={FileOutlined} text={`${item.itemsCount}`} key="list-vertical-count-item"/>,
-                     <ModalUpdateCollection oldDateItem={item}/>,
-                     <Button disabled={disable} onClick={() => onClickRemoveCollection(item._id)}>
+                    <ModalUpdateCollection oldDateItem={item}/>,
+                    <Button disabled={disable} onClick={() => onClickRemoveCollection(item._id)}>
                         <DeleteTwoTone/>
                     </Button>,
                 ]}
@@ -65,4 +65,4 @@ export const CollectionsItem: FC<CollectionsItemProps> = ({item}) => {
             </List.Item>
         </>
     )
-}
+})

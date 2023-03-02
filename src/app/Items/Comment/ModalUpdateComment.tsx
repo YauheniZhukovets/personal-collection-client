@@ -13,7 +13,7 @@ type ModalUpdateCollectionType = {
     oldComment: IComment
 }
 
-export const ModalUpdateComment: React.FC<ModalUpdateCollectionType> = ({oldComment}) => {
+export const ModalUpdateComment: React.FC<ModalUpdateCollectionType> = React.memo(({oldComment}) => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [form] = Form.useForm()
@@ -84,4 +84,4 @@ export const ModalUpdateComment: React.FC<ModalUpdateCollectionType> = ({oldComm
             </Modal>
         </div>
     );
-}
+})

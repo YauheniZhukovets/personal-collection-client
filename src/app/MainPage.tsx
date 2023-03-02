@@ -16,7 +16,7 @@ const contentStyle: React.CSSProperties = {
     textAlign: 'center',
     background: '#b9b9b9',
 }
-export const MainPage: FC = () => {
+export const MainPage: FC = React.memo(() => {
     const {t} = useTranslation()
     const latestItems = useAppSelector<Item[]>(state => state.item.latestItems)
     const maxItemCollections = useAppSelector<Collection[]>(state => state.collection.maxItemCollections)
@@ -104,4 +104,4 @@ export const MainPage: FC = () => {
             }
         </>
     )
-}
+})

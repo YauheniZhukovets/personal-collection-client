@@ -12,7 +12,7 @@ type SidebarPropsType = {
     collapsed: boolean
 }
 
-export const Sidebar: FC<SidebarPropsType> = ({collapsed}) => {
+export const Sidebar: FC<SidebarPropsType> = React.memo(({collapsed}) => {
     const {t} = useTranslation()
     const isAuth = useAppSelector<boolean>(state => state.auth.isAuth)
     const user = useAppSelector<User>(state => state.auth.user)
@@ -65,4 +65,4 @@ export const Sidebar: FC<SidebarPropsType> = ({collapsed}) => {
             />
         </Sider>
     )
-}
+})

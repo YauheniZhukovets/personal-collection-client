@@ -10,7 +10,7 @@ type LikeProps = {
     item: Item
 }
 
-export const Like: FC<LikeProps> = ({item}) => {
+export const Like: FC<LikeProps> = React.memo(({item}) => {
     const dispatch = useAppDispatch()
     const {cId} = useParams<{ id: string, cId: string }>()
     const isAuth = useAppSelector(state => state.auth.isAuth)
@@ -36,4 +36,4 @@ export const Like: FC<LikeProps> = ({item}) => {
             <span style={{paddingLeft: 10}}>{item.likes.length}</span>
         </Card>
     )
-}
+})

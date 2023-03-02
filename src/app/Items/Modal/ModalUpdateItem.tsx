@@ -17,7 +17,7 @@ type ModalCreateItemType = {
     item: Item
 }
 
-export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, item}) => {
+export const ModalUpdateItem: React.FC<ModalCreateItemType> = React.memo(({fieldsOptional, item}) => {
     const dateFormat = 'YYYY-MM-DD'
     const {t} = useTranslation()
     const {id, cId} = useParams<{ id: string, cId: string }>()
@@ -269,4 +269,4 @@ export const ModalUpdateItem: React.FC<ModalCreateItemType> = ({fieldsOptional, 
             </Modal>
         </div>
     );
-}
+})

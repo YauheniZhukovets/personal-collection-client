@@ -11,7 +11,7 @@ import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 import {CommentsPage} from './Comment/CommentsPage';
 import {Like} from './Like';
 
-export const ItemPage: FC = () => {
+export const ItemPage: FC = React.memo(() => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const {id, cId, iId} = useParams<{ id: string, cId: string, iId: string }>()
@@ -84,4 +84,4 @@ export const ItemPage: FC = () => {
             <CommentsPage/>
         </div>
     );
-}
+})

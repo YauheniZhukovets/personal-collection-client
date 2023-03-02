@@ -14,7 +14,7 @@ type ModalCreateItemType = {
     fieldsOptional: Fields[]
 }
 
-export const ModalCreateItem: React.FC<ModalCreateItemType> = ({fieldsOptional}) => {
+export const ModalCreateItem: React.FC<ModalCreateItemType> = React.memo(({fieldsOptional}) => {
     const dateFormat = 'YYYY-MM-DD'
     const {t} = useTranslation()
     const {id, cId} = useParams<{ id: string, cId: string }>()
@@ -67,7 +67,7 @@ export const ModalCreateItem: React.FC<ModalCreateItemType> = ({fieldsOptional})
     return (
         <div>
             {!show && <Button onClick={handleOpen}
-                               type="primary"
+                              type="primary"
             >
                 {t('item.create')}
             </Button>}
@@ -256,4 +256,4 @@ export const ModalCreateItem: React.FC<ModalCreateItemType> = ({fieldsOptional})
             </Modal>
         </div>
     );
-}
+})

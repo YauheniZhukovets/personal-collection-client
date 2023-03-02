@@ -11,7 +11,7 @@ import {routes} from '../shared/routes';
 import {useDebounce} from 'usehooks-ts';
 
 
-export const AdminPanel: React.FC = () => {
+export const AdminPanel: React.FC = React.memo(() => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
@@ -119,4 +119,4 @@ export const AdminPanel: React.FC = () => {
             <Table rowSelection={rowSelection} columns={columns} dataSource={users}/>
         </div>
     )
-}
+})

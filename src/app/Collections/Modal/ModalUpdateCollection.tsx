@@ -22,7 +22,7 @@ type ModalUpdateCollectionType = {
     oldDateItem: Collection
 }
 
-export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldDateItem}) => {
+export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = React.memo(({oldDateItem}) => {
     const {id} = useParams<{ id: string }>()
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
@@ -208,4 +208,4 @@ export const ModalUpdateCollection: React.FC<ModalUpdateCollectionType> = ({oldD
             </Modal>
         </div>
     );
-}
+})

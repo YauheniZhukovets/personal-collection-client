@@ -12,7 +12,7 @@ type CommentType = {
     c: IComment
 }
 
-export const Comment: FC<CommentType> = ({c}) => {
+export const Comment: FC<CommentType> = React.memo(({c}) => {
     const dispatch = useAppDispatch()
     const user = useAppSelector<User>(state => state.auth.user)
 
@@ -39,4 +39,4 @@ export const Comment: FC<CommentType> = ({c}) => {
             {c.text}
         </List.Item>
     )
-}
+})

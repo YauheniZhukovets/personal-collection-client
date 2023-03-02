@@ -9,7 +9,7 @@ import {CollectionsItem} from './CollectionsItem';
 import {LeftCircleOutlined} from '@ant-design/icons';
 import {routes} from '../../shared/routes';
 
-export const CollectionsList: FC = () => {
+export const CollectionsList: FC = React.memo(() => {
     const {id} = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
     const collections = useAppSelector<Collection[]>(state => state.collection.collections)
@@ -42,4 +42,4 @@ export const CollectionsList: FC = () => {
             />
         </>
     )
-}
+})

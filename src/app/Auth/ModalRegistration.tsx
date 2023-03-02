@@ -9,7 +9,7 @@ import {getGoogleOAuthUrl} from '../../shared/getGoogleUrl';
 import {useLocation} from 'react-router-dom';
 import {getGitHubUrl} from '../../shared/getGitHubUrl';
 
-export const ModalRegistration: React.FC = () => {
+export const ModalRegistration: React.FC = React.memo(() => {
     const [open, setOpen] = useState(false)
     const dispatch = useAppDispatch()
     const status = useAppSelector<StatusType>(state => state.app.status)
@@ -94,4 +94,4 @@ export const ModalRegistration: React.FC = () => {
             </Modal>
         </div>
     );
-}
+})

@@ -13,7 +13,7 @@ type TagsType = {
 }
 
 
-export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
+export const TagsUI: FC<TagsType> = React.memo(({form, name, tags, setTags}) => {
     const {t} = useTranslation()
     const [inputVisible, setInputVisible] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
@@ -142,4 +142,4 @@ export const TagsUI: FC<TagsType> = ({form, name, tags, setTags}) => {
             )}
         </Space>
     )
-}
+})

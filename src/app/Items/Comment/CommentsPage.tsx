@@ -11,7 +11,7 @@ import {useTranslation} from 'react-i18next';
 
 const {Title} = Typography;
 
-export const CommentsPage: FC = () => {
+export const CommentsPage: FC = React.memo(() => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [text, setText] = useState<string>('')
@@ -85,4 +85,4 @@ export const CommentsPage: FC = () => {
             </div>
         </Space>
     )
-}
+})

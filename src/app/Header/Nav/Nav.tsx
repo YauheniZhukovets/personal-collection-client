@@ -17,7 +17,7 @@ type NavType = {
     changeLanguage: () => void
 }
 
-export const Nav: FC<NavType> = ({language, isDarkMode, changeLanguage, changeTheme}) => {
+export const Nav: FC<NavType> = React.memo(({language, isDarkMode, changeLanguage, changeTheme}) => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const user = useAppSelector<User>(state => state.auth.user)
@@ -61,4 +61,4 @@ export const Nav: FC<NavType> = ({language, isDarkMode, changeLanguage, changeTh
             }
         </div>
     )
-}
+})
