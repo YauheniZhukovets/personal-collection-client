@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import './index.css';
 import 'easymde/dist/easymde.min.css';
 import {useAppDispatch, useAppSelector} from './hooks/hooks';
-import {checkAuth, logout} from './store/thunk/authThunk';
+import {checkAuth} from './store/thunk/authThunk';
 import {AppRoutes} from './component/AppRoutes';
-import {ModalLogin} from './app/Auth/ModalLogin';
-import {ModalRegistration} from './app/Auth/ModalRegistration';
-import {AutoComplete, Button, ConfigProvider, Input, Layout, message, Switch, theme} from 'antd';
+import {AutoComplete, ConfigProvider, Input, Layout, message, theme} from 'antd';
 import {StatusType} from './type/Common';
 import {useTranslation} from 'react-i18next';
 import {MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
@@ -19,8 +17,9 @@ import {useDebounce} from 'usehooks-ts';
 import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
 import {Item} from './models/Item';
 import {NullAnd} from './type/NullAnd';
-import {User} from './models/User';
 import {setSearchItems} from './store/action/itemAction';
+import {Nav} from './app/Header/Nav/Nav';
+import {BurgerNav} from './app/Header/BurgerNav/BurgerNav';
 
 
 const {Header, Content, Footer} = Layout
@@ -31,7 +30,6 @@ export const App = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isInitialize = useAppSelector<boolean>(state => state.auth.isInitialize)
-    const user = useAppSelector<User>(state => state.auth.user)
     const status = useAppSelector<StatusType>(state => state.app.status)
     const search = useAppSelector<string>(state => state.app.search)
     const searchItems = useAppSelector<Item[]>(state => state.item.searchItems)
@@ -84,9 +82,6 @@ export const App = () => {
         }
     }, [debouncedSearch, selectedTags])
 
-    const onClickLogout = () => {
-        dispatch(logout())
-    }
     const changeTheme = () => {
         setIsDarkMode((previousValue) => !previousValue)
         localStorage.setItem('theme', JSON.stringify(!isDarkMode))
@@ -153,6 +148,7 @@ export const App = () => {
                             </div>
                             <AutoComplete
                                 open={!!selectedTags.length ? true : undefined}
+                                style={{minWidth: 150}}
                                 allowClear
                                 options={searchItems.map(i => i ? {value: i.title} : {})}
                                 onSelect={onSelect}
@@ -161,42 +157,16 @@ export const App = () => {
                                 <Input size="middle" placeholder={`${t('header.search')}`}/>
                             </AutoComplete>
                         </div>
-                        <div style={{display: 'flex', gap: 5}}>
-                            <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
-                                <Switch
-                                    checked={!isDarkMode}
-                                    onChange={changeTheme}
-                                    checkedChildren="Dark"
-                                    unCheckedChildren="Light"
-                                />
-                                <Switch
-                                    checked={language === 'en'}
-                                    onChange={changeLanguage}
-                                    checkedChildren="rus"
-                                    unCheckedChildren="eng"
-                                />
-                            </div>
-                            {
-                                user.email ?
-                                    <div style={{display: 'flex'}}>
-                                        <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
-                                            <div style={{color: 'lightgrey'}}>
-                                                {(user.name && user.name.split(' ')[0]) || user.email.split('@')[0]}
-                                            </div>
-                                            <Button onClick={onClickLogout}
-                                                    disabled={status === 'loading'}
-                                            >
-                                                {t('header.logout')}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div style={{display: 'flex'}}>
-                                        <ModalLogin/>
-                                        <ModalRegistration/>
-                                    </div>
-                            }
-                        </div>
+                        <Nav isDarkMode={isDarkMode}
+                             language={language}
+                             changeLanguage={changeLanguage}
+                             changeTheme={changeTheme}
+                        />
+                        <BurgerNav isDarkMode={isDarkMode}
+                                   language={language}
+                                   changeLanguage={changeLanguage}
+                                   changeTheme={changeTheme}
+                        />
                     </Header>
                     <Content className="site-layout" style={{padding: '0 50px', margin: '16px 0'}}>
                         <AppRoutes/>
