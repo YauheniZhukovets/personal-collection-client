@@ -23,7 +23,7 @@ export const MainPage: FC = React.memo(() => {
 
     return (
         <>
-            <Divider plain>{t('main.collectionsInfo')}</Divider>
+            <Divider plain><span>{t('main.collectionsInfo')}</span></Divider>
             {
                 maxItemCollections.length
                     ? <Carousel effect="fade">
@@ -68,7 +68,7 @@ export const MainPage: FC = React.memo(() => {
                     </Carousel>
                     : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
             }
-            <Divider plain>{t('main.itemsInfo')}</Divider>
+            <Divider plain><span>{t('main.itemsInfo')}</span></Divider>
             {
                 latestItems.length
                     ? <Carousel effect="fade">

@@ -20,7 +20,7 @@ export const Tags: FC = React.memo(() => {
 
     return (
         <>
-            <Divider plain>{t('main.tags')}</Divider>
+            <Divider plain><span>{t('main.tags')}</span></Divider>
             {tags.length ?
                 <div style={{background: '#b9b9b9', borderRadius: 10, padding: 10}}>
                     {tags.map((tag) => (
