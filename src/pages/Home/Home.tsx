@@ -1,9 +1,9 @@
 import React, {FC, useEffect} from 'react';
-import {fetchCollectionsAndItems} from '../store/thunk/commonThunk';
-import {useAppDispatch} from '../hooks/hooks';
-import {MainPage} from './MainPage';
-import {Tags} from './Tags';
+
 import {Space} from 'antd';
+import {useAppDispatch} from 'hooks';
+import {MainPage, Tags} from 'pages';
+import {fetchCollectionsAndItems} from 'store/thunk';
 
 export const Home: FC = () => {
     const dispatch = useAppDispatch()

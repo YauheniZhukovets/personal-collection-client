@@ -1,15 +1,15 @@
 import React, {FC} from 'react';
-import {useAppSelector} from '../hooks/hooks';
-import {Item} from '../models/Item';
-import {Collection} from '../models/Collection';
+
 import {Card, Carousel, Divider, Empty, Image} from 'antd';
-import s from './Collections/Collections.module.css';
+import s from '../Collections/Collections.module.css';
 import Meta from 'antd/es/card/Meta';
 import {NavLink} from 'react-router-dom';
-import {routes} from '../shared/routes';
-import {ErrorImage} from '../component/UI/ErrorImage';
 import {useTranslation} from 'react-i18next';
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
+import {useAppSelector} from 'hooks';
+import {Collection, Item} from 'models';
+import {routes} from 'shared';
+import {ErrorImage} from 'component';
 
 const contentStyle: React.CSSProperties = {
     margin: 0,

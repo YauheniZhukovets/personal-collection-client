@@ -1,12 +1,9 @@
 import React from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {useAppSelector} from '../hooks/hooks';
-import {Home} from '../app/Home';
-import {AdminPanel} from '../app/AdminPanel';
-import {CollectionsList} from '../app/Collections/CollectionsList';
-import {routes} from '../shared/routes';
-import {Items} from '../app/Items/Items.';
-import {ItemPage} from '../app/Items/ItemPage';
+import {routes} from 'shared';
+import {AdminPanel, CollectionsList, Home, ItemPage, Items} from 'pages';
+import {useAppSelector} from 'hooks';
+
 
 export const AppRoutes = () => {
     const isAdmin = useAppSelector<boolean>(state => state.auth.user.isAdmin)

@@ -1,16 +1,18 @@
 import React, {FC} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+
 import {NavLink, useParams} from 'react-router-dom';
-import {Collection} from '../../models/Collection';
+
 import {Button, Image, List} from 'antd';
 import {DeleteTwoTone, FileOutlined, UserOutlined} from '@ant-design/icons';
-import {IconText} from '../../component/UI/IconText';
+
 import s from './Collections.module.css'
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
-import {deleteCollection} from '../../store/thunk/collectionThunk';
-import {ErrorImage} from '../../component/UI/ErrorImage';
-import {ModalUpdateCollection} from './Modal/ModalUpdateCollection';
-import {routes} from '../../shared/routes';
+import {routes} from 'shared';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {deleteCollection} from 'store/thunk';
+import {ErrorImage, IconText} from 'component';
+import {Collection} from 'models';
+import { ModalUpdateCollection } from './Modal';
 
 
 type CollectionsItemProps = {

@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Space, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
-import {banedUser, fetchUsers, makeAdminUser, removeAdminUser, removeUser, unBanedUser} from '../store/thunk/userThunk';
-import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {DomainUser, User} from '../models/User';
+
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {DomainUser, User} from 'models';
 import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {DeleteOutlined, LockOutlined, UnlockOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
-import {routes} from '../shared/routes';
+import {routes} from 'shared';
 import {useDebounce} from 'usehooks-ts';
+import {banedUser, fetchUsers, makeAdminUser, removeAdminUser, removeUser, unBanedUser} from 'store/thunk';
 
 
 export const AdminPanel: React.FC = React.memo(() => {

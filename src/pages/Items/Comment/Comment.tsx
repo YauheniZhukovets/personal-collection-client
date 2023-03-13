@@ -1,12 +1,15 @@
 import React, {FC} from 'react';
 import {Avatar, Button, List} from 'antd';
-import {IconText} from '../../../component/UI/IconText';
+
 import {DeleteTwoTone, FieldTimeOutlined, UserOutlined} from '@ant-design/icons';
-import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
-import {User} from '../../../models/User';
-import {deleteComment} from '../../../store/thunk/commentThunk';
-import {ModalUpdateComment} from './ModalUpdateComment';
-import {IComment} from '../../../models/Comments';
+
+
+import {ModalUpdateComment} from 'pages';
+import {IComment, User} from 'models';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {deleteComment} from 'store/thunk';
+import {IconText} from 'component';
+
 
 type CommentType = {
     c: IComment

@@ -1,16 +1,20 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Checkbox, DatePicker, Form, Input, InputNumber, Modal} from 'antd';
-import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
-import {StatusType} from '../../../type/Common';
+
+
 import {useTranslation} from 'react-i18next';
-import {Fields} from '../../../type/Fields';
+
 import SimpleMdeReact from 'react-simplemde-editor';
-import {TagsUI} from '../../../component/UI/TagsUI';
-import {Item} from '../../../models/Item';
+
 import {useParams} from 'react-router-dom';
 import {EditTwoTone} from '@ant-design/icons';
 import moment from 'moment';
-import {updateItem} from '../../../store/thunk/itemThunk';
+import {Item} from 'models';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {Fields, StatusType} from 'type';
+import {TagsUI} from 'component';
+import {updateItem} from 'store/thunk';
+
 
 type ModalCreateItemType = {
     fieldsOptional: Fields[]

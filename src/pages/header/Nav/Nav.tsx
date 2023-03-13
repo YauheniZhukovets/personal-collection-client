@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {Button, Switch} from 'antd';
-import {ModalLogin} from '../../Auth/ModalLogin';
-import {ModalRegistration} from '../../Auth/ModalRegistration';
-import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
-import {User} from '../../../models/User';
-import {logout} from '../../../store/thunk/authThunk';
-import {StatusType} from '../../../type/Common';
+
 import {useTranslation} from 'react-i18next';
 import s from './Nav.module.css'
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {logout} from 'store/thunk';
+import {User} from 'models';
+import {StatusType} from 'type';
+import {ModalLogin, ModalRegistration} from 'pages';
 
 
 type NavType = {

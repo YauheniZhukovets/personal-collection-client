@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
 import CheckableTag from 'antd/es/tag/CheckableTag';
 import {Divider, Empty} from 'antd';
-import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {setSelectedTags} from '../store/action/appAction';
+
 import {useTranslation} from 'react-i18next';
-import {Tag} from '../models/Tag';
-import {setSearchItems} from '../store/action/itemAction';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {setSearchItems, setSelectedTags} from 'store/action';
+import {Tag} from 'models';
+
 
 export const Tags: FC = React.memo(() => {
     const {t} = useTranslation()

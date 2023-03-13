@@ -1,25 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import './index.css';
 import 'easymde/dist/easymde.min.css';
-import {useAppDispatch, useAppSelector} from './hooks/hooks';
-import {checkAuth} from './store/thunk/authThunk';
-import {AppRoutes} from './component/AppRoutes';
+
 import {AutoComplete, ConfigProvider, Input, Layout, message, theme} from 'antd';
-import {StatusType} from './type/Common';
+
 import {useTranslation} from 'react-i18next';
 import {MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
 import {Backdrop, CircularProgress} from '@mui/material';
-import {Sidebar} from './component/Sidebar';
+
 import {useNavigate} from 'react-router-dom';
-import {routes} from './shared/routes';
-import {setError, setSearchText, setSelectedTags} from './store/action/appAction';
+
 import {useDebounce} from 'usehooks-ts';
-import {fetchSearchItems, fetchTags} from './store/thunk/commonThunk';
-import {Item} from './models/Item';
-import {NullAnd} from './type/NullAnd';
-import {setSearchItems} from './store/action/itemAction';
-import {Nav} from './app/Header/Nav/Nav';
-import {BurgerNav} from './app/Header/BurgerNav/BurgerNav';
+import {NullAnd, StatusType} from 'type';
+import {BurgerNav, Nav} from 'pages';
+import {checkAuth, fetchSearchItems, fetchTags} from 'store/thunk';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {Item} from 'models';
+import {routes} from 'shared';
+import {AppRoutes, Sidebar} from 'component';
+import {setError, setSearchItems, setSearchText, setSelectedTags} from 'store/action';
 
 
 const {Header, Content, Footer} = Layout
