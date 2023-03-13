@@ -1,5 +1,5 @@
-import {IComment} from '../../models/Comments';
+import { IComment } from 'models'
 
 export const setComments = (comments: IComment[]) => {
-    return {type: 'COMMENTS/SET-COMMENTS', comments} as const
+  return { type: 'COMMENTS/SET-COMMENTS', comments } as const
 }

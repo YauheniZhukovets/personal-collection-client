@@ -1,48 +1,49 @@
-import React, {FC, useEffect} from 'react';
+import React, { memo, FC, useEffect } from 'react'
 
-import {NavLink, useParams} from 'react-router-dom';
+import { LeftCircleOutlined } from '@ant-design/icons'
+import { Button, List } from 'antd'
+import { NavLink, useParams } from 'react-router-dom'
 
-import {Button, List} from 'antd';
+import { CollectionsItem, ModalCreateCollection } from 'component'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { Collection } from 'models'
+import { routes } from 'shared'
+import { fetchCollections } from 'store/thunk'
 
-import {LeftCircleOutlined} from '@ant-design/icons';
-import {routes} from 'shared';
-import {useAppDispatch, useAppSelector} from 'hooks';
-import {fetchCollections} from 'store/thunk';
-import {Collection} from 'models';
-import {CollectionsItem, ModalCreateCollection} from 'component';
+export const CollectionsList: FC = memo(() => {
+  const { id } = useParams<{ id: string }>()
+  const dispatch = useAppDispatch()
+  const collections = useAppSelector<Collection[]>(state => state.collection.collections)
 
+  const user = useAppSelector(state => state.auth.user)
+  const show = user._id !== id && !user.isAdmin
 
-export const CollectionsList: FC = React.memo(() => {
-    const {id} = useParams<{ id: string }>()
-    const dispatch = useAppDispatch()
-    const collections = useAppSelector<Collection[]>(state => state.collection.collections)
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchCollections(id))
+    }
+  }, [id])
 
-    const user = useAppSelector(state => state.auth.user)
-    const show = user._id !== id && !user.isAdmin
+  return (
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
+        <NavLink to={routes.HOME}>
+          <Button>
+            <LeftCircleOutlined />
+          </Button>
+        </NavLink>
+        {!show && <ModalCreateCollection />}
+      </div>
 
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchCollections(id))
-        }
-    }, [id])
-
-    return (
-        <>
-            <div style={{display: 'flex', alignItems: 'center', gap: 15}}>
-                <NavLink to={routes.HOME}><Button><LeftCircleOutlined/></Button></NavLink>
-                {!show && <ModalCreateCollection/>}
-            </div>
-
-            <List itemLayout="vertical"
-                  size="default"
-                  pagination={{
-                      pageSize: 5,
-                  }}
-                  dataSource={collections ? collections : []}
-                  renderItem={(item) => (
-                      <CollectionsItem key={item._id} item={item}/>
-                  )}
-            />
-        </>
-    )
+      <List
+        itemLayout="vertical"
+        size="default"
+        pagination={{
+          pageSize: 5,
+        }}
+        dataSource={collections ? collections : []}
+        renderItem={item => <CollectionsItem key={item._id} item={item} />}
+      />
+    </>
+  )
 })

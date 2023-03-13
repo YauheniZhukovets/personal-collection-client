@@ -1,1 +1,1 @@
-export {ItemPage} from './ItemPage'
+export { ItemPage } from './ItemPage'

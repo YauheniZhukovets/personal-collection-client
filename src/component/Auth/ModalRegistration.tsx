@@ -1,99 +1,87 @@
-import React, {useState} from 'react';
-import {Button, Form, Input, Modal, Space} from 'antd';
+import React, { memo, useState } from 'react'
 
-import {useTranslation} from 'react-i18next';
-import {GithubOutlined, GoogleOutlined} from '@ant-design/icons';
+import { GithubOutlined, GoogleOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Modal, Space } from 'antd'
+import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
-import {useLocation} from 'react-router-dom';
-import {getGitHubUrl, getGoogleOAuthUrl} from 'shared';
-import {useAppDispatch, useAppSelector} from 'hooks';
-import {AuthValueType, StatusType} from 'type';
-import {registration} from 'store/thunk';
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { getGitHubUrl, getGoogleOAuthUrl } from 'shared'
+import { registration } from 'store/thunk'
+import { AuthValueType, StatusType } from 'type'
 
+export const ModalRegistration: React.FC = memo(() => {
+  const [open, setOpen] = useState(false)
+  const dispatch = useAppDispatch()
+  const status = useAppSelector<StatusType>(state => state.app.status)
+  const { t } = useTranslation()
+  const location = useLocation()
+  let from = ((location.state as any)?.from?.pathname as string) || '/'
 
-export const ModalRegistration: React.FC = React.memo(() => {
-    const [open, setOpen] = useState(false)
-    const dispatch = useAppDispatch()
-    const status = useAppSelector<StatusType>(state => state.app.status)
-    const {t} = useTranslation()
-    const location = useLocation()
-    let from = ((location.state as any)?.from?.pathname as string) || '/'
+  const showModal = () => {
+    setOpen(true)
+  }
 
+  const handleCancel = () => {
+    setOpen(false)
+  }
 
-    const showModal = () => {
-        setOpen(true)
+  const onSubmitForm = async (values: AuthValueType) => {
+    await dispatch(registration(values.email, values.name, values.password))
+    if (status === 'succeeded') {
+      handleCancel()
     }
+  }
 
-    const handleCancel = () => {
-        setOpen(false)
-    }
+  return (
+    <div>
+      <Button onClick={showModal}>{t('header.signUp')}</Button>
+      <Modal open={open} title={t('signUp.signUp')} onCancel={handleCancel} footer={[]}>
+        <Form
+          name="registration"
+          onFinish={onSubmitForm}
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 18 }}
+        >
+          <Form.Item
+            label={t('signUp.email')}
+            name="email"
+            rules={[{ required: true, min: 3, message: 'Please input your Email!' }]}
+          >
+            <Input placeholder="Email..." />
+          </Form.Item>
 
-    const onSubmitForm = async (values: AuthValueType) => {
-        await dispatch(registration(values.email, values.name, values.password))
-        if (status === 'succeeded') {
-            handleCancel()
-        }
-    }
+          <Form.Item
+            label={t('signUp.password')}
+            name="password"
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-    return (
-        <div>
-            <Button onClick={showModal}>
-                {t('header.signUp')}
-            </Button>
-            <Modal
-                open={open}
-                title={t('signUp.signUp')}
-                onCancel={handleCancel}
-                footer={[]}
-            >
-                <Form
-                    name="registration"
-                    onFinish={onSubmitForm}
-                    labelCol={{span: 4}}
-                    wrapperCol={{span: 18}}
-                >
-                    <Form.Item label={t('signUp.email')}
-                               name="email"
-                               rules={[{required: true, min: 3, message: 'Please input your Email!'}]}
-                    >
-                        <Input placeholder="Email..."/>
-                    </Form.Item>
+          <Form.Item label={t('signUp.username')} name="name">
+            <Input />
+          </Form.Item>
 
-                    <Form.Item label={t('signUp.password')}
-                               name="password"
-                               rules={[{required: true, message: 'Please input your password!'}]}
-                    >
-                        <Input.Password/>
-                    </Form.Item>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+            <Form.Item>
+              <Button htmlType="submit" type="primary" disabled={status === 'loading'}>
+                {t('signUp.signUp')}
+              </Button>
+            </Form.Item>
 
-                    <Form.Item label={t('signUp.username')}
-                               name="name"
-                    >
-                        <Input/>
-                    </Form.Item>
-
-                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'start'}}>
-                        <Form.Item>
-                            <Button htmlType="submit"
-                                    type="primary"
-                                    disabled={status === 'loading'}
-                            >
-                                {t('signUp.signUp')}
-                            </Button>
-                        </Form.Item>
-
-                        <span>{t('signIn.or')}</span>
-                        <Space direction="vertical">
-                            <Button icon={<GoogleOutlined/>}>
-                                <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
-                            </Button>
-                            <Button icon={<GithubOutlined/>}>
-                                <a href={getGitHubUrl(from)}>{` ${t('signIn.signInGitHub')}`}</a>
-                            </Button>
-                        </Space>
-                    </div>
-                </Form>
-            </Modal>
-        </div>
-    );
+            <span>{t('signIn.or')}</span>
+            <Space direction="vertical">
+              <Button icon={<GoogleOutlined />}>
+                <a href={getGoogleOAuthUrl(from)}>{` ${t('signIn.signInGoogle')}`}</a>
+              </Button>
+              <Button icon={<GithubOutlined />}>
+                <a href={getGitHubUrl(from)}>{` ${t('signIn.signInGitHub')}`}</a>
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Modal>
+    </div>
+  )
 })

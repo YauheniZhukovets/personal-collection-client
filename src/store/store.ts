@@ -1,21 +1,23 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import {userReducer} from './reducer/userReducer';
-import {authReducer} from './reducer/authReducer';
-import {appReducer} from './reducer/appReducer';
-import {collectionReducer} from './reducer/collectionReducer';
-import {itemReducer} from './reducer/itemReducer';
-import {commentsReducer} from './reducer/commentsReducer';
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
+import {
+  userReducer,
+  authReducer,
+  appReducer,
+  collectionReducer,
+  itemReducer,
+  commentsReducer,
+} from 'store/reducer'
 
 const rootReducer = combineReducers({
-    app: appReducer,
-    auth: authReducer,
-    user: userReducer,
-    collection: collectionReducer,
-    item: itemReducer,
-    comments: commentsReducer,
+  app: appReducer,
+  auth: authReducer,
+  user: userReducer,
+  collection: collectionReducer,
+  item: itemReducer,
+  comments: commentsReducer,
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

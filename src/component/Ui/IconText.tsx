@@ -1,9 +1,10 @@
-import React from 'react';
-import {Space} from 'antd';
+import React, { createElement } from 'react'
 
-export const IconText = ({icon, text}: { icon: React.FC, text: string }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
+import { Space } from 'antd'
+
+export const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
+  <Space>
+    {createElement(icon)}
+    {text}
+  </Space>
 )

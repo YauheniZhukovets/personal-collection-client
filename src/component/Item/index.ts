@@ -1,2 +1,2 @@
-export {ModalUpdateItem} from './ModalUpdateItem'
-export {ModalCreateItem} from './ModalCreateItem'
+export { ModalUpdateItem } from './ModalUpdateItem'
+export { ModalCreateItem } from './ModalCreateItem'

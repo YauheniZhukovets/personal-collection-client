@@ -1,1 +1,1 @@
-export {BurgerNav} from './BurgerNav'
+export { BurgerNav } from './BurgerNav'

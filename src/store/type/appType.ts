@@ -1,4 +1,11 @@
-import {setError, setLanguage, setSearchText, setSelectedTags, setStatus, setTags} from '../action/appAction';
+import {
+  setError,
+  setLanguage,
+  setSearchText,
+  setSelectedTags,
+  setStatus,
+  setTags,
+} from 'store/action'
 
 export type SetStatusType = ReturnType<typeof setStatus>
 export type SetLanguageType = ReturnType<typeof setLanguage>
@@ -8,9 +15,9 @@ export type SetSelectedTagsType = ReturnType<typeof setSelectedTags>
 export type SetErrorType = ReturnType<typeof setError>
 
 export type ActionAppType =
-    SetStatusType
-    | SetLanguageType
-    | SetSearchTextType
-    | SetTagsType
-    | SetSelectedTagsType
-    | SetErrorType
+  | SetStatusType
+  | SetLanguageType
+  | SetSearchTextType
+  | SetTagsType
+  | SetSelectedTagsType
+  | SetErrorType

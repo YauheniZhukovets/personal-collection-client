@@ -1,1 +1,1 @@
-export {useAppSelector,useAppDispatch, useTranslateOptions, } from './hooks'
+export { useAppSelector, useAppDispatch, useTranslateOptions } from './hooks'

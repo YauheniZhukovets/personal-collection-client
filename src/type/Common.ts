@@ -1,17 +1,16 @@
-import {Collection} from '../models/Collection';
-import {Item} from '../models/Item';
+import { Collection, Item } from 'models'
 
 export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type LanguageType = 'ru' | 'en'
 
 export type AuthValueType = {
-    email: string
-    password: string
-    name?: string
+  email: string
+  password: string
+  name?: string
 }
 
 export type CollectionsAndItemsType = {
-    collections: Collection[]
-    items: Item []
+  collections: Collection[]
+  items: Item[]
 }

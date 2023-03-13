@@ -1,6 +1,5 @@
 export type Fields = {
-    key: string
-    title: string
-    description: string
+  key: string
+  title: string
+  description: string
 }
-

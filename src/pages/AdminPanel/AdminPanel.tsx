@@ -1,123 +1,144 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Space, Table} from 'antd';
-import type {ColumnsType} from 'antd/es/table';
+import React, { memo, useEffect, useState } from 'react'
 
-import {useAppDispatch, useAppSelector} from 'hooks';
-import {DomainUser, User} from 'models';
-import {NavLink} from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
-import {DeleteOutlined, LockOutlined, UnlockOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
-import {routes} from 'shared';
-import {useDebounce} from 'usehooks-ts';
-import {banedUser, fetchUsers, makeAdminUser, removeAdminUser, removeUser, unBanedUser} from 'store/thunk';
+import {
+  DeleteOutlined,
+  LockOutlined,
+  UnlockOutlined,
+  UserAddOutlined,
+  UserDeleteOutlined,
+} from '@ant-design/icons'
+import { Button, Space, Table } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
+import { useTranslation } from 'react-i18next'
+import { NavLink } from 'react-router-dom'
+import { useDebounce } from 'usehooks-ts'
 
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { DomainUser, User } from 'models'
+import { routes } from 'shared'
+import {
+  banedUser,
+  fetchUsers,
+  makeAdminUser,
+  removeAdminUser,
+  removeUser,
+  unBanedUser,
+} from 'store/thunk'
 
-export const AdminPanel: React.FC = React.memo(() => {
-    const {t} = useTranslation()
-    const dispatch = useAppDispatch()
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-    const status = useAppSelector<string>(state => state.app.status)
-    const u = useAppSelector<any>(state => state.user.users)
-    const debouncedUsers = useDebounce<User[]>(u, 10000)
-    const columns: ColumnsType<User> = [
-        {
-            title: `${t('admin.email')}`,
-            dataIndex: 'email',
-            render: (_, u) => (
-                <Space size="middle">
-                    <NavLink to={`${routes.COLLECTIONS}/${u._id}`}>{u.email}</NavLink>
-                </Space>
-            ),
-        },
-        {
-            title: `${t('admin.name')}`,
-            dataIndex: 'name',
-        },
-        {
-            title: `${t('admin.admin')}`,
-            dataIndex: 'isAdmin',
-        },
-        {
-            title: `${t('admin.block')}`,
-            dataIndex: 'isBlocked',
-        },
-        {
-            title: `${t('admin.collections')}`,
-            dataIndex: 'collectionsCount',
-        },
-    ]
+export const AdminPanel: React.FC = memo(() => {
+  const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+  const status = useAppSelector<string>(state => state.app.status)
+  const u = useAppSelector<any>(state => state.user.users)
+  const debouncedUsers = useDebounce<User[]>(u, 10000)
+  const columns: ColumnsType<User> = [
+    {
+      title: `${t('admin.email')}`,
+      dataIndex: 'email',
+      render: (_, u) => (
+        <Space size="middle">
+          <NavLink to={`${routes.COLLECTIONS}/${u._id}`}>{u.email}</NavLink>
+        </Space>
+      ),
+    },
+    {
+      title: `${t('admin.name')}`,
+      dataIndex: 'name',
+    },
+    {
+      title: `${t('admin.admin')}`,
+      dataIndex: 'isAdmin',
+    },
+    {
+      title: `${t('admin.block')}`,
+      dataIndex: 'isBlocked',
+    },
+    {
+      title: `${t('admin.collections')}`,
+      dataIndex: 'collectionsCount',
+    },
+  ]
 
-    const users = u.map((el: DomainUser, i: number) => {
-        let admin = el.isAdmin
-        let baned = el.isBlocked
-        return (
-            {...el, key: i, isAdmin: String(admin), isBlocked: String(baned)}
-        )
-    })
+  const users = u.map((el: DomainUser, i: number) => {
+    let admin = el.isAdmin
+    let baned = el.isBlocked
 
-    const getUserId = (users: DomainUser[], key: React.Key[]) => {
-        return users.filter((u) => key.includes(u.key)).map(el => el._id)
-    }
+    return { ...el, key: i, isAdmin: String(admin), isBlocked: String(baned) }
+  })
 
-    useEffect(() => {
-        dispatch(fetchUsers())
-    }, [debouncedUsers])
+  const getUserId = (users: DomainUser[], key: React.Key[]) => {
+    return users.filter(u => key.includes(u.key)).map(el => el._id)
+  }
 
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [debouncedUsers])
 
-    const onClickBlock = () => {
-        const ids = getUserId(users, selectedRowKeys)
-        dispatch(banedUser(ids))
-    }
+  const onClickBlock = () => {
+    const ids = getUserId(users, selectedRowKeys)
 
-    const onClickUnBlock = () => {
-        const ids = getUserId(users, selectedRowKeys)
-        dispatch(unBanedUser(ids))
-    }
+    dispatch(banedUser(ids))
+  }
 
-    const onClickMakeAdmin = () => {
-        const ids = getUserId(users, selectedRowKeys)
-        dispatch(makeAdminUser(ids))
-    }
+  const onClickUnBlock = () => {
+    const ids = getUserId(users, selectedRowKeys)
 
-    const onClickRemoveAdmin = () => {
-        const ids = getUserId(users, selectedRowKeys)
-        dispatch(removeAdminUser(ids))
-    }
+    dispatch(unBanedUser(ids))
+  }
 
-    const onClickDelete = () => {
-        const ids = getUserId(users, selectedRowKeys)
-        dispatch(removeUser(ids))
-    }
+  const onClickMakeAdmin = () => {
+    const ids = getUserId(users, selectedRowKeys)
 
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        setSelectedRowKeys(newSelectedRowKeys);
-    }
+    dispatch(makeAdminUser(ids))
+  }
 
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    }
+  const onClickRemoveAdmin = () => {
+    const ids = getUserId(users, selectedRowKeys)
 
-    return (
-        <div>
-            <div style={{marginBottom: 16, display: 'flex', gap: 5}}>
-                <Button onClick={onClickBlock} disabled={status === 'loading'}>
-                    <LockOutlined/>
-                </Button>
-                <Button onClick={onClickUnBlock} disabled={status === 'loading'}>
-                    <UnlockOutlined/>
-                </Button>
-                <Button onClick={onClickMakeAdmin} disabled={status === 'loading'}>
-                    <UserAddOutlined/>
-                </Button>
-                <Button onClick={onClickRemoveAdmin} disabled={status === 'loading'}>
-                    <UserDeleteOutlined/>
-                </Button>
-                <Button type="primary" onClick={onClickDelete} disabled={status === 'loading'}>
-                    <DeleteOutlined/>
-                </Button>
-            </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={users} scroll={{x: true}}/>
-        </div>
-    )
+    dispatch(removeAdminUser(ids))
+  }
+
+  const onClickDelete = () => {
+    const ids = getUserId(users, selectedRowKeys)
+
+    dispatch(removeUser(ids))
+  }
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 16, display: 'flex', gap: 5 }}>
+        <Button onClick={onClickBlock} disabled={status === 'loading'}>
+          <LockOutlined />
+        </Button>
+        <Button onClick={onClickUnBlock} disabled={status === 'loading'}>
+          <UnlockOutlined />
+        </Button>
+        <Button onClick={onClickMakeAdmin} disabled={status === 'loading'}>
+          <UserAddOutlined />
+        </Button>
+        <Button onClick={onClickRemoveAdmin} disabled={status === 'loading'}>
+          <UserDeleteOutlined />
+        </Button>
+        <Button type="primary" onClick={onClickDelete} disabled={status === 'loading'}>
+          <DeleteOutlined />
+        </Button>
+      </div>
+      <Table
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={users}
+        scroll={{ x: true }}
+      />
+    </div>
+  )
 })

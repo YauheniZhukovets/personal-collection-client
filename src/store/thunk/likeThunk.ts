@@ -1,31 +1,45 @@
-import {AppThunk} from '../../type/Store';
-import axios from 'axios';
-import {setError, setStatus} from '../action/appAction';
-import {LikeService} from '../../service/LikeService';
-import {fetchItem} from './itemThunk';
+import axios from 'axios'
 
-export const likeItem = (cId: string, iId: string): AppThunk => async (dispatch) => {
-    try {
-        await LikeService.likeItem(iId)
-        dispatch(fetchItem(cId, iId))
-        dispatch(setStatus('succeeded'))
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
-            dispatch(setError(error))        }
-        dispatch(setStatus('failed'))
-    }
-}
+import { fetchItem } from './itemThunk'
 
-export const dislikeItem = (cId: string, iId: string): AppThunk => async (dispatch) => {
+import { LikeService } from 'service'
+import { setError, setStatus } from 'store/action'
+import { AppThunk } from 'type'
+
+export const likeItem =
+  (cId: string, iId: string): AppThunk =>
+  async dispatch => {
     try {
-        await LikeService.dislikeItem(iId)
-        dispatch(fetchItem(cId, iId))
-        dispatch(setStatus('succeeded'))
+      await LikeService.likeItem(iId)
+      dispatch(fetchItem(cId, iId))
+      dispatch(setStatus('succeeded'))
     } catch (e) {
-        if (axios.isAxiosError(e)) {
-            const error = e.response ? e.response?.data?.message : (e.message + ', more details in the console')
-            dispatch(setError(error))        }
-        dispatch(setStatus('failed'))
+      if (axios.isAxiosError(e)) {
+        const error = e.response
+          ? e.response?.data?.message
+          : e.message + ', more details in the console'
+
+        dispatch(setError(error))
+      }
+      dispatch(setStatus('failed'))
     }
-}
+  }
+
+export const dislikeItem =
+  (cId: string, iId: string): AppThunk =>
+  async dispatch => {
+    try {
+      await LikeService.dislikeItem(iId)
+      dispatch(fetchItem(cId, iId))
+      dispatch(setStatus('succeeded'))
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const error = e.response
+          ? e.response?.data?.message
+          : e.message + ', more details in the console'
+
+        dispatch(setError(error))
+      }
+      dispatch(setStatus('failed'))
+    }
+  }
