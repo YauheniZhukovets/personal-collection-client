@@ -2,14 +2,14 @@ import React, {FC, useState} from 'react';
 import {Button, Switch} from 'antd';
 
 import {useTranslation} from 'react-i18next';
-import closeMenu from '../../../assets/image/closeMenu.svg'
-import menu from '../../../assets/image/menu.svg'
+import closeMenu from '../../assets/image/closeMenu.svg'
+import menu from '../../assets/image/menu.svg'
 import s from './BurgerNav.module.css'
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {logout} from 'store/thunk';
 import {User} from 'models';
 import {StatusType} from 'type';
-import {ModalLogin, ModalRegistration} from 'pages';
+import {ModalLogin, ModalRegistration} from 'component';
 
 
 type NavType = {

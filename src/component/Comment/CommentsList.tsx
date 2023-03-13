@@ -2,16 +2,16 @@ import React, {FC, useEffect, useState} from 'react';
 import {Button, List, message, Space, Typography} from 'antd';
 import {Comment} from './Comment';
 import TextArea from 'antd/es/input/TextArea';
-import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
-import {IComment} from '../../../models/Comments';
-import {StatusType} from '../../../type/Common';
-import {createComment, fetchComments} from '../../../store/thunk/commentThunk';
 import {useDebounce} from 'usehooks-ts';
 import {useTranslation} from 'react-i18next';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {IComment} from 'models';
+import {StatusType} from 'type';
+import {createComment, fetchComments} from 'store/thunk';
 
 const {Title} = Typography;
 
-export const CommentsPage: FC = React.memo(() => {
+export const CommentsList: FC = React.memo(() => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [text, setText] = useState<string>('')

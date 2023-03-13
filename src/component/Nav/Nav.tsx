@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from 'hooks';
 import {logout} from 'store/thunk';
 import {User} from 'models';
 import {StatusType} from 'type';
-import {ModalLogin, ModalRegistration} from 'pages';
+import {ModalLogin, ModalRegistration} from 'component';
 
 
 type NavType = {

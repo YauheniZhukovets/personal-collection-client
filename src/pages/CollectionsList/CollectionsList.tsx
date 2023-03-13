@@ -1,13 +1,16 @@
 import React, {FC, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {fetchCollections} from '../../store/thunk/collectionThunk';
+
 import {NavLink, useParams} from 'react-router-dom';
-import {Collection} from '../../models/Collection';
+
 import {Button, List} from 'antd';
-import {ModalCreateCollection} from './Modal/ModalCreateCollection';
-import {CollectionsItem} from './CollectionsItem';
+
 import {LeftCircleOutlined} from '@ant-design/icons';
-import {routes} from '../../shared/routes';
+import {routes} from 'shared';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {fetchCollections} from 'store/thunk';
+import {Collection} from 'models';
+import {CollectionsItem, ModalCreateCollection} from 'component';
+
 
 export const CollectionsList: FC = React.memo(() => {
     const {id} = useParams<{ id: string }>()

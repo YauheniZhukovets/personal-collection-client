@@ -10,9 +10,8 @@ import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
 import {routes} from 'shared';
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {deleteCollection} from 'store/thunk';
-import {ErrorImage, IconText} from 'component';
+import {ErrorImage, IconText, ModalUpdateCollection} from 'component';
 import {Collection} from 'models';
-import { ModalUpdateCollection } from './Modal';
 
 
 type CollectionsItemProps = {

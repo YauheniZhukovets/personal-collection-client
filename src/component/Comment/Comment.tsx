@@ -4,11 +4,10 @@ import {Avatar, Button, List} from 'antd';
 import {DeleteTwoTone, FieldTimeOutlined, UserOutlined} from '@ant-design/icons';
 
 
-import {ModalUpdateComment} from 'pages';
+import {IconText, ModalUpdateComment} from 'component';
 import {IComment, User} from 'models';
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {deleteComment} from 'store/thunk';
-import {IconText} from 'component';
 
 
 type CommentType = {

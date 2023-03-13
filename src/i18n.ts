@@ -38,7 +38,7 @@ i18n
                     },
                     sidebar: {
                         home: 'Home',
-                        collection: 'My Collections',
+                        collection: 'My CollectionsList',
                         admin: 'Admin Panel',
                     },
                     admin: {
@@ -46,7 +46,7 @@ i18n
                         email: 'Email',
                         admin: 'Admin',
                         block: 'Blocked',
-                        collections: 'Collections',
+                        collections: 'CollectionsList',
                         onBlock: 'Block',
                         onUnBlock: 'Unblock',
                         onDelete: 'Delete',
@@ -114,7 +114,7 @@ i18n
                     },
                     main: {
                         tags: 'Tags',
-                        collectionsInfo: 'Collections with the most items',
+                        collectionsInfo: 'CollectionsList with the most items',
                         itemsInfo: 'Latest added items',
                         itemCount: 'Item count',
                         likeCount: 'Likes',

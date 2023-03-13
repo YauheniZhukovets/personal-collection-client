@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {Button, Card, message} from 'antd';
 import {DislikeOutlined, LikeOutlined} from '@ant-design/icons';
-import {Item} from '../../models/Item';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {dislikeItem, likeItem} from '../../store/thunk/likeThunk';
 import {useParams} from 'react-router-dom';
+import {Item} from 'models';
+import {dislikeItem, likeItem} from 'store/thunk';
+import {useAppDispatch, useAppSelector} from 'hooks';
 
 type LikeProps = {
     item: Item

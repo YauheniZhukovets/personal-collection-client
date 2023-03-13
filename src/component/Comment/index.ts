@@ -1,3 +1,3 @@
 export {Comment} from './Comment'
-export {CommentsPage} from './CommentsPage'
+export {CommentsList} from './CommentsList'
 export {ModalUpdateComment} from './ModalUpdateComment'

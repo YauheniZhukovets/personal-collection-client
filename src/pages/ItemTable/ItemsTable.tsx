@@ -1,23 +1,25 @@
 import React, {FC, useEffect} from 'react';
 import {NavLink, useParams} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {deleteItem, fetchItems} from '../../store/thunk/itemThunk';
+
 import {Button, Checkbox, Space, Table, Tag} from 'antd';
-import {Item} from '../../models/Item';
+
 import {ColumnsType} from 'antd/es/table';
-import {fields} from '../../shared/fields';
+
 import {DeleteTwoTone, LeftCircleOutlined} from '@ant-design/icons';
-import {ModalCreateItem} from './Modal/ModalCreateItem';
-import {Fields} from '../../type/Fields';
-import {Collection} from '../../models/Collection';
-import {fetchCollections} from '../../store/thunk/collectionThunk';
-import {ModalUpdateItem} from './Modal/ModalUpdateItem';
+
+
 import {useTranslation} from 'react-i18next';
-import {routes} from '../../shared/routes';
+
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {ModalCreateItem, ModalUpdateItem} from 'component';
+import {Collection, Item} from 'models';
+import {deleteItem, fetchCollections, fetchItems} from 'store/thunk';
+import {fields, routes} from 'shared';
+import {Fields} from 'type';
 
 
-export const Items: FC = React.memo(() => {
+export const ItemsTable: FC = React.memo(() => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const {id, cId} = useParams<{ id: string, cId: string }>()

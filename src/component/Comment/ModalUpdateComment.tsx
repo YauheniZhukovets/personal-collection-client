@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Button, Form, Modal} from 'antd';
-import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
-import {StatusType} from '../../../type/Common';
+
 import {EditTwoTone} from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
-import {IComment} from '../../../models/Comments';
-import {updateComment} from '../../../store/thunk/commentThunk';
+
 import TextArea from 'antd/es/input/TextArea';
+import {IComment} from 'models';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {StatusType} from 'type';
+import {updateComment} from 'store/thunk';
 
 
 type ModalUpdateCollectionType = {

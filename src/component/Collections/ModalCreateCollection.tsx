@@ -1,19 +1,21 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Form, Input, message, Modal, Select, Transfer, UploadProps} from 'antd';
-import {useAppDispatch, useAppSelector, useTranslateOptions} from '../../../hooks/hooks';
-import {StatusType} from '../../../type/Common';
-import {uploadImage} from '../../../store/thunk/uploadThunk';
+
 import {InboxOutlined} from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
 import {RcFile} from 'antd/es/upload';
-import {setImageUrl} from '../../../store/action/collectionAction';
+
 import SimpleMdeReact from 'react-simplemde-editor';
 import {useTranslation} from 'react-i18next';
-import {RequestCollectionType} from '../../../models/Collection';
+
 import {useParams} from 'react-router-dom';
-import {themes} from '../../../shared/themeOptions';
-import {fields} from '../../../shared/fields';
-import {createCollection} from '../../../store/thunk/collectionThunk';
+import {setImageUrl} from 'store/action';
+import {fields, themes} from 'shared';
+import {useAppDispatch, useAppSelector, useTranslateOptions} from 'hooks';
+import {StatusType} from 'type';
+import {RequestCollectionType} from 'models';
+import {createCollection, uploadImage} from 'store/thunk';
+
 
 const {Option} = Select
 

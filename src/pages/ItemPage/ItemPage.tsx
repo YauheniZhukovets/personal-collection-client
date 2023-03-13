@@ -1,15 +1,18 @@
 import React, {FC, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+
 import {useTranslation} from 'react-i18next';
 import {NavLink, useParams} from 'react-router-dom';
-import {Item} from '../../models/Item';
-import {fetchItem} from '../../store/thunk/itemThunk';
+
 import {Button, Card, Checkbox, Descriptions, Tag} from 'antd';
-import {routes} from '../../shared/routes';
+
 import {LeftCircleOutlined} from '@ant-design/icons';
 import {ReactMarkdown} from 'react-markdown/lib/react-markdown';
-import {CommentsPage} from './Comment/CommentsPage';
-import {Like} from './Like';
+
+import {CommentsList, Like} from 'component';
+import {Item} from 'models';
+import {routes} from 'shared';
+import {useAppDispatch, useAppSelector} from 'hooks';
+import {fetchItem} from 'store/thunk';
 
 export const ItemPage: FC = React.memo(() => {
     const dispatch = useAppDispatch()
@@ -81,7 +84,7 @@ export const ItemPage: FC = React.memo(() => {
             {
                 item.likes && <Like item={item}/>
             }
-            <CommentsPage/>
+            <CommentsList/>
         </div>
     );
 })

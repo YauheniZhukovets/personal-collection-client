@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 
 import {Card, Carousel, Divider, Empty, Image} from 'antd';
-import s from '../Collections/Collections.module.css';
+import s from '../component/Collections/Collections.module.css';
 import Meta from 'antd/es/card/Meta';
 import {NavLink} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
@@ -16,7 +16,7 @@ const contentStyle: React.CSSProperties = {
     textAlign: 'center',
     background: '#b9b9b9',
 }
-export const MainPage: FC = React.memo(() => {
+export const Main: FC = React.memo(() => {
     const {t} = useTranslation()
     const latestItems = useAppSelector<Item[]>(state => state.item.latestItems)
     const maxItemCollections = useAppSelector<Collection[]>(state => state.collection.maxItemCollections)

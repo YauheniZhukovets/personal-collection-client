@@ -12,12 +12,11 @@ import {useNavigate} from 'react-router-dom';
 
 import {useDebounce} from 'usehooks-ts';
 import {NullAnd, StatusType} from 'type';
-import {BurgerNav, Nav} from 'pages';
+import {AppRoutes, BurgerNav, Nav, Sidebar} from 'component';
 import {checkAuth, fetchSearchItems, fetchTags} from 'store/thunk';
 import {useAppDispatch, useAppSelector} from 'hooks';
 import {Item} from 'models';
 import {routes} from 'shared';
-import {AppRoutes, Sidebar} from 'component';
 import {setError, setSearchItems, setSearchText, setSelectedTags} from 'store/action';
 
 
